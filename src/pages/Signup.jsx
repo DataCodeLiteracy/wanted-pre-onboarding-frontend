@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [password, setPassword] = useState("");
@@ -9,15 +10,15 @@ export default function Signup() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     emailRef.current = email;
     passwordRef.current = password;
 
-    // 이메일과 비밀번호 유효성 검사
     const isValidEmail = emailRef.current.indexOf("@") !== -1;
     const isValidPassword = passwordRef.current.length >= 8;
 
-    // 버튼 활성/비활성 상태 업데이트
     setBtnDisabled(!isValidEmail || !isValidPassword);
   }, [email, password]);
 
@@ -46,8 +47,8 @@ export default function Signup() {
           }
         }
       );
-
       window.alert("회원가입이 완료되었습니다!");
+      navigate("/signin");
     } catch (error) {
       setError(error.response.data.message);
     }
