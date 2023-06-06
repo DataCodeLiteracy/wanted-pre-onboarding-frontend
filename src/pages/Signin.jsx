@@ -7,6 +7,9 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access_token") || ""
+  );
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
@@ -22,6 +25,12 @@ export default function Signup() {
     setBtnDisabled(!isValidEmail || !isValidPassword);
   }, [email, password]);
 
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/todo");
+    }
+  }, [accessToken, navigate]);
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -29,7 +38,13 @@ export default function Signup() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-  const handleSignup = async (e) => {
+
+  const saveToken = (token) => {
+    localStorage.setItem("access_token", token);
+    setAccessToken(token);
+  };
+
+  const handleSignin = async (e) => {
     e.preventDefault();
     const SIGNIN_API =
       "https://www.pre-onboarding-selection-task.shop/auth/signin";
@@ -48,11 +63,11 @@ export default function Signup() {
         }
       );
       window.alert("로그인이 완료되었습니다!");
-      navigate("/todo");
 
       const { access_token } = req.data;
-
-      localStorage.setItem("access_token", access_token);
+      if (access_token) {
+        saveToken(access_token);
+      }
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -61,7 +76,7 @@ export default function Signup() {
   return (
     <div>
       <h1>로그인</h1>
-      <form onSubmit={handleSignup}>
+      <form onSubmit={handleSignin}>
         <div>
           <label htmlFor="email">이메일</label>
           <input
@@ -69,7 +84,6 @@ export default function Signup() {
             data-testid="email-input"
             type="text"
             placeholder="이메일 입력"
-            autoComplete="on"
             value={email}
             onChange={handleEmailChange}
           />
