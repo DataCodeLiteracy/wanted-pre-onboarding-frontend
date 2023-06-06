@@ -49,6 +49,10 @@ export default function Signup() {
       );
       window.alert("로그인이 완료되었습니다!");
       navigate("/todo");
+
+      const { access_token } = req.data;
+
+      localStorage.setItem("access_token", access_token);
     } catch (error) {
       setError(error.response.data.message);
     }
