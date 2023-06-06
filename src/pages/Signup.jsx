@@ -9,6 +9,9 @@ export default function Signup() {
   const [btnDisabled, setBtnDisabled] = useState(false);
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access_token") || ""
+  );
 
   const navigate = useNavigate();
 
@@ -22,6 +25,12 @@ export default function Signup() {
     setBtnDisabled(!isValidEmail || !isValidPassword);
   }, [email, password]);
 
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/todo");
+    }
+  }, [accessToken, navigate]);
+
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -29,6 +38,12 @@ export default function Signup() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
+  const saveToken = (token) => {
+    localStorage.setItem("access_token", token);
+    setAccessToken(token);
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
     const SIGNUP_API =
@@ -48,7 +63,13 @@ export default function Signup() {
         }
       );
       window.alert("회원가입이 완료되었습니다!");
+
       navigate("/signin");
+
+      const { access_token } = req.data;
+      if (access_token) {
+        saveToken(access_token);
+      }
     } catch (error) {
       setError(error.response.data.message);
     }
