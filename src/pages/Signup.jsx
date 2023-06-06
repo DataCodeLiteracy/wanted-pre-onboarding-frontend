@@ -1,11 +1,33 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 export default function Signup() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [btnDisabled, setBtnDisabled] = useState(false);
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
 
+  useEffect(() => {
+    emailRef.current = email;
+    passwordRef.current = password;
+
+    // 이메일과 비밀번호 유효성 검사
+    const isValidEmail = emailRef.current.indexOf("@") !== -1;
+    const isValidPassword = passwordRef.current.length >= 8;
+
+    // 버튼 활성/비활성 상태 업데이트
+    setBtnDisabled(!isValidEmail || !isValidPassword);
+  }, [email, password]);
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
   const handleSignup = async (e) => {
     e.preventDefault();
     const SIGNUP_API =
@@ -44,7 +66,7 @@ export default function Signup() {
             placeholder="이메일 입력"
             autoComplete="on"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
           />
         </div>
         <div>
@@ -55,13 +77,15 @@ export default function Signup() {
             type="password"
             placeholder="비밀번호 입력"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
           />
         </div>
 
-        {error && <div>{error}</div>}
-
-        <button data-testid="signup-button" type="submit">
+        <button
+          data-testid="signup-button"
+          type="submit"
+          disabled={btnDisabled}
+        >
           가입하기
         </button>
       </form>
