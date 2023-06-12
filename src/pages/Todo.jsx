@@ -9,7 +9,9 @@ export default function Todo() {
     setTodos([...todos, todo]);
   };
 
-  const handleDelete = () => {};
+  const handleDelete = (deleted) => {
+    setTodos(todos.filter((todo) => todo.id !== deleted.id));
+  };
 
   const handleUpdate = () => {};
 
