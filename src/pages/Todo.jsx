@@ -15,7 +15,9 @@ export default function Todo() {
 
   const handleUpdate = () => {};
 
-  const handleCheck = () => {};
+  const handleCheck = (checked) => {
+    setTodos(todos.map((todo) => (todo.id === checked.id ? checked : todo)));
+  };
 
   return (
     <div>
