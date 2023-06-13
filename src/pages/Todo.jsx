@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TodoInput from "../components/TodoInput";
 import TodoList from "../components/TodoList";
 import { useNavigate } from "react-router-dom";
+import TodoHeader from "../components/TodoHeader";
 
 export default function Todo() {
   const [todos, setTodos] = useState(() => readTodo());
@@ -43,7 +44,8 @@ export default function Todo() {
   }, [accessToken, navigate]);
 
   return (
-    <div>
+    <section>
+      <TodoHeader />
       <h1>TODO LIST</h1>
       <TodoInput onAdd={handleAdd} />
       <ul className="todos">
@@ -57,7 +59,7 @@ export default function Todo() {
           />
         ))}
       </ul>
-    </div>
+    </section>
   );
 }
 

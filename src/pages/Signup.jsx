@@ -66,7 +66,7 @@ export default function Signup() {
   };
 
   return (
-    <div>
+    <section>
       <h1>회원가입</h1>
       <form onSubmit={handleSignup}>
         <div>
@@ -101,6 +101,6 @@ export default function Signup() {
           가입하기
         </button>
       </form>
-    </div>
+    </section>
   );
 }
