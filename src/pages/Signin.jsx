@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import SignHeader from "../components/SignHeader";
 
 export default function Signup() {
   const [password, setPassword] = useState("");
@@ -75,6 +76,7 @@ export default function Signup() {
 
   return (
     <section>
+      <SignHeader />
       <h1>로그인</h1>
       <form onSubmit={handleSignin}>
         <div>

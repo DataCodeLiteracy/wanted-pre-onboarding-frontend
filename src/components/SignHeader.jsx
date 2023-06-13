@@ -1,13 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { AiFillHome } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-export default function Header() {
+export default function SignHeader() {
   const navigate = useNavigate();
 
   return (
     <nav>
       <h1>Wanted-Pre-Onboarding</h1>
       <div>
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <AiFillHome />
+        </button>
         <button
           onClick={() => {
             navigate("/signup");
@@ -21,13 +29,6 @@ export default function Header() {
           }}
         >
           로그인
-        </button>
-        <button
-          onClick={() => {
-            navigate("/todo");
-          }}
-        >
-          TODOLIST
         </button>
       </div>
     </nav>
