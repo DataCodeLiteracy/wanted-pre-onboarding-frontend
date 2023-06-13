@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TodoInput from "../components/TodoInput";
 import TodoList from "../components/TodoList";
+import { useNavigate } from "react-router-dom";
 
 export default function Todo() {
   const [todos, setTodos] = useState(() => readTodo());
@@ -28,6 +29,18 @@ export default function Todo() {
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
+
+  const navigate = useNavigate();
+
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access_token") || ""
+  );
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigate("/signin");
+    }
+  }, [accessToken, navigate]);
 
   return (
     <div>
