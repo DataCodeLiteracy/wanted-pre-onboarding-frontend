@@ -13,10 +13,16 @@ export default function Todo() {
     setTodos(todos.filter((todo) => todo.id !== deleted.id));
   };
 
-  const handleUpdate = () => {};
-
   const handleCheck = (checked) => {
     setTodos(todos.map((todo) => (todo.id === checked.id ? checked : todo)));
+  };
+
+  const handleEdit = (edited) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === edited.id ? { ...todo, text: edited.text } : todo
+      )
+    );
   };
 
   return (
@@ -28,8 +34,8 @@ export default function Todo() {
           <TodoList
             key={item.id}
             todo={item}
+            onEdit={handleEdit}
             onCheck={handleCheck}
-            onUpdate={handleUpdate}
             onDelete={handleDelete}
           />
         ))}
