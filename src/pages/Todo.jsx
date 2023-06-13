@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TodoInput from "../components/TodoInput";
 import TodoList from "../components/TodoList";
 
 export default function Todo() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => readTodo());
 
   const handleAdd = (todo) => {
     setTodos([...todos, todo]);
@@ -25,6 +25,10 @@ export default function Todo() {
     );
   };
 
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
   return (
     <div>
       <h1>TODO LIST</h1>
@@ -42,4 +46,9 @@ export default function Todo() {
       </ul>
     </div>
   );
+}
+
+function readTodo() {
+  const todos = localStorage.getItem("todos");
+  return todos ? JSON.parse(todos) : [];
 }
