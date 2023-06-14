@@ -103,7 +103,7 @@ export default function Signup() {
         </div>
 
         <button
-          data-testid="signup-button"
+          data-testid="signin-button"
           type="submit"
           disabled={btnDisabled}
         >
