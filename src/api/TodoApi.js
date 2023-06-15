@@ -4,7 +4,7 @@ const accessToken = localStorage.getItem("access_token");
 
 const REQUEST_URL = "https://www.pre-onboarding-selection-task.shop";
 
-export const createTodo = async (todo) => {
+export const createTodo = async (accessToken, todo) => {
   const res = await axios.post(
     `${REQUEST_URL}/todos`,
     { todo: JSON.stringify(todo) },
@@ -20,7 +20,7 @@ export const createTodo = async (todo) => {
   return createdTodo;
 };
 
-export const getTodos = async (todos) => {
+export const getTodos = async (accessToken, todos) => {
   const res = await axios.get(`${REQUEST_URL}/todos`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
@@ -29,7 +29,7 @@ export const getTodos = async (todos) => {
   return res.data;
 };
 
-export const updateTodo = async (checked) => {
+export const updateTodo = async (accessToken, checked) => {
   const res = await axios.put(
     `${REQUEST_URL}/todos/${checked.id}`,
     {
@@ -46,7 +46,7 @@ export const updateTodo = async (checked) => {
   return res.data;
 };
 
-export const deleteTodo = async (deleted) => {
+export const deleteTodo = async (accessToken, deleted) => {
   const res = await axios.delete(`${REQUEST_URL}/todos/${deleted.id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,

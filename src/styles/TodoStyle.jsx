@@ -79,8 +79,9 @@ export const LI = styled.li`
 `;
 
 export const Label = styled.label`
+  overflow-x: auto;
   margin-left: 20px;
-  width: 150px;
+  width: 200px;
   height: 20px;
   text-decoration: ${(props) => (props.completed ? "line-through" : "none")};
 `;

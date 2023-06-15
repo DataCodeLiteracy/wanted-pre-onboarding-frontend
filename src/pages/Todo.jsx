@@ -12,7 +12,7 @@ export default function Todo() {
 
   const handleAdd = async (todo) => {
     try {
-      const createdTodo = await createTodo(todo);
+      const createdTodo = await createTodo(accessToken, todo);
       const newId = createdTodo.id;
 
       todo.id = newId;
@@ -24,12 +24,12 @@ export default function Todo() {
   };
 
   const handleDelete = (deleted) => {
-    deleteTodo(deleted);
+    deleteTodo(accessToken, deleted);
     setTodos(todos.filter((todo) => todo.id !== deleted.id));
   };
 
   const handleCheck = (checked) => {
-    updateTodo(checked);
+    updateTodo(accessToken, checked);
     setTodos(todos.map((todo) => (todo.id === checked.id ? checked : todo)));
   };
 
@@ -81,6 +81,6 @@ export default function Todo() {
 
 function readTodo() {
   const todos = localStorage.getItem("todos");
-  getTodos();
+  getTodos(localStorage.getItem("access_token"), todos);
   return todos ? JSON.parse(todos) : [];
 }

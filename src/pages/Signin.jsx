@@ -14,9 +14,7 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [btnDisabled, setBtnDisabled] = useState(false);
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("access_token") || ""
-  );
+  const [accessToken, setAccessToken] = useState(null);
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
@@ -33,6 +31,13 @@ export default function Signup() {
   }, [email, password]);
 
   useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      setAccessToken(token);
+    }
+  }, []);
+
+  useEffect(() => {
     if (accessToken) {
       navigate("/todo");
     }
@@ -47,8 +52,8 @@ export default function Signup() {
   };
 
   const saveToken = (token) => {
-    localStorage.setItem("access_token", token);
     setAccessToken(token);
+    localStorage.setItem("access_token", token);
   };
 
   const handleSignin = async (e) => {
@@ -69,14 +74,18 @@ export default function Signup() {
           }
         }
       );
-      window.alert("로그인이 완료되었습니다!");
 
       const { access_token } = res.data;
       if (access_token) {
         saveToken(access_token);
+        navigate("/todo");
       }
+
+      window.alert("로그인이 완료되었습니다!");
     } catch (error) {
       if (error.response.status === 404) {
+        window.alert(error.response.data.message);
+      } else if (error.response.status === 401) {
         window.alert(error.response.data.message);
       }
       setError(error.response.data.message);
