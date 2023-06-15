@@ -21,6 +21,8 @@ npm start 명령어로 실행한다.
 회원가입과 로그인 페이지에 이메일과 비밀번호의 유효성 검사기능을 구현해주세요.
 입력된 이메일과 비밀번호가 유효성 검사를 통과하지 못한다면 button에 disabled 속성을 부여해주세요.
 
+![유효성검사](https://github.com/DataCodeLiteracy/wanted-pre-onboarding-frontend/assets/103319477/a0aeee39-2397-4697-b736-99221047a3d9)
+
 ### Assignment 2
 
 회원가입 페이지에서 버튼을 클릭 시 회원가입을 진행하고 회원가입이 정상적으로 완료되었을 시 /signin 경로로 이동해주세요.
