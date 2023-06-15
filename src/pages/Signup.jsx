@@ -53,7 +53,7 @@ export default function Signup() {
       "https://www.pre-onboarding-selection-task.shop/auth/signup";
 
     try {
-      const req = await axios.post(
+      const res = await axios.post(
         SIGNUP_API,
         {
           email,
@@ -65,10 +65,14 @@ export default function Signup() {
           }
         }
       );
+
       window.alert("회원가입이 완료되었습니다!");
 
       navigate("/signin");
     } catch (error) {
+      if (error.response.status === 400) {
+        window.alert(error.response.data.message);
+      }
       setError(error.response.data.message);
     }
   };

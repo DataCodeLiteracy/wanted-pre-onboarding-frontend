@@ -57,7 +57,7 @@ export default function Signup() {
       "https://www.pre-onboarding-selection-task.shop/auth/signin";
 
     try {
-      const req = await axios.post(
+      const res = await axios.post(
         SIGNIN_API,
         {
           email,
@@ -71,11 +71,14 @@ export default function Signup() {
       );
       window.alert("로그인이 완료되었습니다!");
 
-      const { access_token } = req.data;
+      const { access_token } = res.data;
       if (access_token) {
         saveToken(access_token);
       }
     } catch (error) {
+      if (error.response.status === 404) {
+        window.alert(error.response.data.message);
+      }
       setError(error.response.data.message);
     }
   };
