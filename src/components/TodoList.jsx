@@ -5,6 +5,13 @@ import {
   MdFileDownloadDone
 } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
+import {
+  LI,
+  TodoListButton,
+  Input,
+  ListInput,
+  Label
+} from "../styles/TodoStyle";
 
 export default function TodoList({ todo, onEdit, onCheck, onDelete }) {
   const { text, state } = todo;
@@ -37,10 +44,10 @@ export default function TodoList({ todo, onEdit, onCheck, onDelete }) {
   };
 
   return (
-    <li>
+    <LI>
       <input
         type="checkbox"
-        id="checkbox"
+        id={`checkbox-${text}`}
         onChange={handleChange}
         checked={state === "completed"}
       />
@@ -52,25 +59,30 @@ export default function TodoList({ todo, onEdit, onCheck, onDelete }) {
             onChange={handleEditInput}
             value={editValue}
           />
-          <button data-testid="submit-button" onClick={handleEditSubmit}>
+          <TodoListButton
+            data-testid="submit-button"
+            onClick={handleEditSubmit}
+          >
             <MdFileDownloadDone />
-          </button>
-          <button data-testid="cancel-button" onClick={handleCancel}>
+          </TodoListButton>
+          <TodoListButton data-testid="cancel-button" onClick={handleCancel}>
             <MdOutlineCancel />
-          </button>
+          </TodoListButton>
         </>
       )}
       {!isEditing && (
         <>
-          <label htmlFor="checkbox">{text}</label>
-          <button data-testid="modify-button" onClick={handleEditCheck}>
+          <Label htmlFor={`checkbox-${text}`} completed={state === "completed"}>
+            {text}
+          </Label>
+          <TodoListButton data-testid="modify-button" onClick={handleEditCheck}>
             <FiEdit />
-          </button>
-          <button data-testid="delete-button" onClick={handleDelete}>
+          </TodoListButton>
+          <TodoListButton data-testid="delete-button" onClick={handleDelete}>
             <MdDeleteForever />
-          </button>
+          </TodoListButton>
         </>
       )}
-    </li>
+    </LI>
   );
 }

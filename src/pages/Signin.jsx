@@ -2,6 +2,12 @@ import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import SignHeader from "../components/SignHeader";
+import {
+  SignForm,
+  SignTitle,
+  SignWrapper,
+  SignMain
+} from "../styles/SignStyle";
 
 export default function Signup() {
   const [password, setPassword] = useState("");
@@ -75,41 +81,43 @@ export default function Signup() {
   };
 
   return (
-    <section>
+    <SignWrapper>
       <SignHeader />
-      <h1>로그인</h1>
-      <form onSubmit={handleSignin}>
-        <div>
-          <label htmlFor="email">이메일</label>
-          <input
-            id="email"
-            data-testid="email-input"
-            type="text"
-            placeholder="이메일 입력"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">비밀번호</label>
-          <input
-            id="password"
-            data-testid="password-input"
-            type="password"
-            placeholder="비밀번호 입력"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
+      <SignMain>
+        <SignTitle>로그인</SignTitle>
+        <SignForm onSubmit={handleSignin}>
+          <div>
+            <label htmlFor="email">이메일</label>
+            <input
+              id="email"
+              data-testid="email-input"
+              type="text"
+              placeholder="이메일 입력"
+              value={email}
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">비밀번호</label>
+            <input
+              id="password"
+              data-testid="password-input"
+              type="password"
+              placeholder="비밀번호 입력"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </div>
 
-        <button
-          data-testid="signin-button"
-          type="submit"
-          disabled={btnDisabled}
-        >
-          로그인
-        </button>
-      </form>
-    </section>
+          <button
+            data-testid="signin-button"
+            type="submit"
+            disabled={btnDisabled}
+          >
+            로그인
+          </button>
+        </SignForm>
+      </SignMain>
+    </SignWrapper>
   );
 }

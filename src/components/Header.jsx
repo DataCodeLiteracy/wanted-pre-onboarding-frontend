@@ -1,35 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Button, FlexDiv, Nav } from "../styles/HeaderStyle";
 
 export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <nav>
+    <Nav>
       <h1>Wanted-Pre-Onboarding</h1>
-      <div>
-        <button
+      <FlexDiv>
+        <Button
           onClick={() => {
             navigate("/signup");
           }}
         >
           회원가입
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             navigate("/signin");
           }}
         >
           로그인
-        </button>
-        <button
-          onClick={() => {
-            navigate("/todo");
-          }}
-        >
-          TODOLIST
-        </button>
-      </div>
-    </nav>
+        </Button>
+      </FlexDiv>
+    </Nav>
   );
 }

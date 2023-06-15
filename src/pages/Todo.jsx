@@ -4,6 +4,7 @@ import TodoList from "../components/TodoList";
 import { useNavigate } from "react-router-dom";
 import TodoHeader from "../components/TodoHeader";
 import { createTodo, deleteTodo, getTodos, updateTodo } from "../api/TodoApi";
+import { TodoWrapper, TodoMain, TodoTitle, UL } from "../styles/TodoStyle";
 
 export default function Todo() {
   const [todos, setTodos] = useState(() => readTodo());
@@ -57,22 +58,24 @@ export default function Todo() {
   }, [accessToken, navigate]);
 
   return (
-    <section>
+    <TodoWrapper>
       <TodoHeader />
-      <h1>TODO LIST</h1>
-      <TodoInput onAdd={handleAdd} />
-      <ul className="todos">
-        {todos.map((item) => (
-          <TodoList
-            key={item.id}
-            todo={item}
-            onEdit={handleEdit}
-            onCheck={handleCheck}
-            onDelete={handleDelete}
-          />
-        ))}
-      </ul>
-    </section>
+      <TodoMain>
+        <TodoTitle>TODO LIST</TodoTitle>
+        <TodoInput onAdd={handleAdd} />
+        <UL className="todos">
+          {todos.map((item) => (
+            <TodoList
+              key={item.id}
+              todo={item}
+              onEdit={handleEdit}
+              onCheck={handleCheck}
+              onDelete={handleDelete}
+            />
+          ))}
+        </UL>
+      </TodoMain>
+    </TodoWrapper>
   );
 }
 

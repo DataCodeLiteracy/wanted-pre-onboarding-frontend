@@ -1,11 +1,16 @@
 import React from "react";
 import Header from "../components/Header";
+import { Title, WhiteShadowTitle, Wrapper, Main } from "../styles/HomeStyle";
 
 export default function Home() {
   return (
-    <section>
+    <Wrapper>
       <Header />
-      <h1>홈 화면입니다!</h1>
-    </section>
+      <Main>
+        <Title>FRONTEND</Title>
+        <WhiteShadowTitle>INTERNSHIP</WhiteShadowTitle>
+      </Main>
+      <div>Made By DataLiteracy</div>
+    </Wrapper>
   );
 }

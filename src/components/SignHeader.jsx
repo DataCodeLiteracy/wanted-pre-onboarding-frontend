@@ -1,36 +1,37 @@
 import React from "react";
 import { AiFillHome } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { Button, FlexDiv, Nav } from "../styles/HeaderStyle";
 
 export default function SignHeader() {
   const navigate = useNavigate();
 
   return (
-    <nav>
+    <Nav>
       <h1>Wanted-Pre-Onboarding</h1>
-      <div>
-        <button
+      <FlexDiv>
+        <Button
           onClick={() => {
             navigate("/");
           }}
         >
           <AiFillHome />
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             navigate("/signup");
           }}
         >
           회원가입
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => {
             navigate("/signin");
           }}
         >
           로그인
-        </button>
-      </div>
-    </nav>
+        </Button>
+      </FlexDiv>
+    </Nav>
   );
 }

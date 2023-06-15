@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TodoButton, Input, TodoInputMain } from "../styles/TodoStyle";
 
 export default function TodoInput({ onAdd }) {
   const [value, setValue] = useState("");
@@ -16,15 +17,15 @@ export default function TodoInput({ onAdd }) {
     setValue(e.target.value);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <TodoInputMain onSubmit={handleSubmit}>
+      <Input
         data-testid="new-todo-input"
         type="text"
         value={value}
         onChange={handleChange}
         placeholder="할 일을 입력해주세요."
       />
-      <button data-testid="new-todo-add-button">추가</button>
-    </form>
+      <TodoButton data-testid="new-todo-add-button">추가</TodoButton>
+    </TodoInputMain>
   );
 }
