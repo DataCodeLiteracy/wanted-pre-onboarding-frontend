@@ -9,6 +9,9 @@ import { TodoWrapper, TodoMain, TodoTitle, UL } from "../styles/TodoStyle";
 export default function Todo() {
   const [todos, setTodos] = useState(() => readTodo());
   const [error, setError] = useState("");
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access_token") || ""
+  );
 
   const handleAdd = async (todo) => {
     try {
@@ -47,10 +50,6 @@ export default function Todo() {
 
   const navigate = useNavigate();
 
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("access_token") || ""
-  );
-
   useEffect(() => {
     const handleError = (e) => {
       e.preventDefault();
@@ -63,8 +62,6 @@ export default function Todo() {
       window.location.href = "/signin";
       return;
     }
-
-    // navigate("/signin");
   }, [accessToken, navigate]);
 
   return (

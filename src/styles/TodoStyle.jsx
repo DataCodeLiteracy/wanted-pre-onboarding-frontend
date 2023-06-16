@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { SignMain } from "./SignStyle";
 import { Button } from "./HeaderStyle";
 

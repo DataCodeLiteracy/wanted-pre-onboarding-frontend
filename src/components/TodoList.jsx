@@ -5,13 +5,7 @@ import {
   MdFileDownloadDone
 } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
-import {
-  LI,
-  TodoListButton,
-  Input,
-  ListInput,
-  Label
-} from "../styles/TodoStyle";
+import { LI, TodoListButton, Label } from "../styles/TodoStyle";
 
 export default function TodoList({ todo, onEdit, onCheck, onDelete }) {
   const { text, state } = todo;
