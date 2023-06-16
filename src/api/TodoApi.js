@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const accessToken = localStorage.getItem("access_token");
-
 const REQUEST_URL = "https://www.pre-onboarding-selection-task.shop";
 
 export const createTodo = async (accessToken, todo) => {

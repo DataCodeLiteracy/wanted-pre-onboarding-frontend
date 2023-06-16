@@ -52,9 +52,19 @@ export default function Todo() {
   );
 
   useEffect(() => {
+    const handleError = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    window.onerror = handleError;
+
     if (!accessToken) {
-      navigate("/signin");
+      window.location.href = "/signin";
+      return;
     }
+
+    // navigate("/signin");
   }, [accessToken, navigate]);
 
   return (
