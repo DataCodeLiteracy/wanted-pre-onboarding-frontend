@@ -9,7 +9,7 @@ export default function TodoInput({ onAdd }) {
     if (value.trim().length === 0) {
       return;
     }
-    onAdd({ text: value, isCompleted: false });
+    onAdd(value);
     setValue("");
   };
 
