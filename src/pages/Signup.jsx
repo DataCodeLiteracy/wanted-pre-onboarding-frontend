@@ -1,56 +1,51 @@
-import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import SignHeader from "../components/SignHeader";
-import {
-  SignWrapper,
-  SignTitle,
-  SignMain,
-  SignForm
-} from "../styles/SignStyle";
-import { Button } from "../styles/HeaderStyle";
+import axios from 'axios'
+import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { SignWrapper, SignTitle, SignMain, SignForm } from '../styles/SignStyle'
+import { Button } from '../styles/HeaderStyle'
+import AppHeader from '../components/AppHeader'
 
 export default function Signup() {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [btnDisabled, setBtnDisabled] = useState(false);
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState('')
+  const [btnDisabled, setBtnDisabled] = useState(false)
+  const emailRef = useRef('')
+  const passwordRef = useRef('')
   const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("access_token") || ""
-  );
+    localStorage.getItem('access_token') || ''
+  )
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
-    emailRef.current = email;
-    passwordRef.current = password;
+    emailRef.current = email
+    passwordRef.current = password
 
-    const isValidEmail = emailRef.current.indexOf("@") !== -1;
-    const isValidPassword = passwordRef.current.length >= 8;
+    const isValidEmail = emailRef.current.indexOf('@') !== -1
+    const isValidPassword = passwordRef.current.length >= 8
 
-    setBtnDisabled(!isValidEmail || !isValidPassword);
-  }, [email, password]);
+    setBtnDisabled(!isValidEmail || !isValidPassword)
+  }, [email, password])
 
   useEffect(() => {
     if (accessToken) {
-      navigate("/todo");
+      navigate('/todo')
     }
-  }, [accessToken, navigate]);
+  }, [accessToken, navigate])
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+    setPassword(e.target.value)
+  }
 
   const handleSignup = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const SIGNUP_API =
-      "https://www.pre-onboarding-selection-task.shop/auth/signup";
+      'https://www.pre-onboarding-selection-task.shop/auth/signup'
 
     try {
       const res = await axios.post(
@@ -61,25 +56,31 @@ export default function Signup() {
         },
         {
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
           }
         }
-      );
+      )
 
-      window.alert("회원가입이 완료되었습니다!");
+      window.alert('회원가입이 완료되었습니다!')
 
-      navigate("/signin");
+      navigate('/signin')
     } catch (error) {
       if (error.response.status === 400) {
-        window.alert(error.response.data.message);
+        window.alert(error.response.data.message)
       }
-      setError(error.response.data.message);
+      setError(error.response.data.message)
     }
-  };
+  }
 
   return (
     <SignWrapper>
-      <SignHeader />
+      <AppHeader
+        navigate={navigate}
+        handleLogout={false}
+        showHomeButton={true}
+        showSignupButton={false}
+        showSigninButton={true}
+      />
       <SignMain>
         <SignTitle>회원가입</SignTitle>
         <SignForm onSubmit={handleSignup}>
@@ -117,5 +118,5 @@ export default function Signup() {
         </SignForm>
       </SignMain>
     </SignWrapper>
-  );
+  )
 }
