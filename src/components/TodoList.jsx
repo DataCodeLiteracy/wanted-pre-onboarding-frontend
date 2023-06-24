@@ -1,49 +1,49 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   MdDeleteForever,
   MdOutlineCancel,
   MdFileDownloadDone
-} from "react-icons/md";
-import { FiEdit } from "react-icons/fi";
-import { LI, TodoListButton, Label } from "../styles/TodoStyle";
+} from 'react-icons/md'
+import { FiEdit } from 'react-icons/fi'
+import { LI, TodoListButton, Label } from '../styles/TodoStyle'
 
 export default function TodoList({ todoItem, onEdit, onCheck, onDelete }) {
-  const { todo, state } = todoItem;
+  const { todo, state } = todoItem
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState("");
+  const [isEditing, setIsEditing] = useState(false)
+  const [editValue, setEditValue] = useState('')
 
   const handleChange = (e) => {
-    const state = e.target.checked ? "completed" : "active";
-    onCheck({ ...todoItem, state });
-  };
+    const state = e.target.checked ? 'completed' : 'active'
+    onCheck({ ...todoItem, state })
+  }
 
-  const handleDelete = () => onDelete(todoItem);
+  const handleDelete = () => onDelete(todoItem)
   const handleEditCheck = () => {
-    setIsEditing(true);
-    setEditValue(todo);
-  };
+    setIsEditing(true)
+    setEditValue(todo)
+  }
   const handleEditInput = (e) => {
-    setEditValue(e.target.value);
-  };
+    setEditValue(e.target.value)
+  }
   const handleEditSubmit = (e) => {
-    e.preventDefault();
-    onEdit({ ...todoItem, text: editValue });
-    setIsEditing(false);
-    setEditValue("");
-  };
+    e.preventDefault()
+    onEdit({ ...todoItem, text: editValue })
+    setIsEditing(false)
+    setEditValue('')
+  }
   const handleCancel = (e) => {
-    e.preventDefault();
-    setIsEditing(false);
-  };
+    e.preventDefault()
+    setIsEditing(false)
+  }
 
   return (
     <LI>
       <input
         type="checkbox"
-        id={`checkbox-${todoItem}`}
+        id={`checkbox-${todoItem.id}`}
         onChange={handleChange}
-        checked={state === "completed"}
+        checked={state === 'completed'}
       />
       {isEditing && (
         <>
@@ -67,8 +67,8 @@ export default function TodoList({ todoItem, onEdit, onCheck, onDelete }) {
       {!isEditing && (
         <>
           <Label
-            htmlFor={`checkbox-${todoItem}`}
-            completed={state === "completed"}
+            htmlFor={`checkbox-${todoItem.id}`}
+            completed={state === 'completed'}
           >
             {todo}
           </Label>
@@ -81,5 +81,5 @@ export default function TodoList({ todoItem, onEdit, onCheck, onDelete }) {
         </>
       )}
     </LI>
-  );
+  )
 }
