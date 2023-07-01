@@ -1,4 +1,3 @@
-import React from 'react'
 import AppHeader from '../components/AppHeader'
 import { Title, WhiteShadowTitle, Wrapper, Main } from '../styles/HomeStyle'
 import { useNavigate } from 'react-router-dom'

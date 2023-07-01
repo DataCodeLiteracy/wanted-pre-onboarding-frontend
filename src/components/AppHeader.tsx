@@ -1,6 +1,4 @@
-// AppHeader.jsx
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { NavigateFunction } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 
@@ -10,6 +8,12 @@ export default function AppHeader({
   showHomeButton,
   showSignupButton,
   showSigninButton
+}: {
+  navigate: NavigateFunction
+  handleLogout: boolean
+  showHomeButton: boolean
+  showSignupButton: boolean
+  showSigninButton: boolean
 }) {
   return (
     <Nav>
