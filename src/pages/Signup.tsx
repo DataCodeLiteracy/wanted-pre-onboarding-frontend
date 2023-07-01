@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignWrapper, SignTitle, SignMain, SignForm } from '../styles/SignStyle'
 import { Button } from '../styles/HeaderStyle'
@@ -10,21 +10,16 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [btnDisabled, setBtnDisabled] = useState(false)
-  const emailRef = useRef('')
-  const passwordRef = useRef('')
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem('access_token') || ''
   )
 
   const navigate = useNavigate()
 
+  const isValidEmail = email.indexOf('@') !== -1
+  const isValidPassword = password.length >= 8
+
   useEffect(() => {
-    emailRef.current = email
-    passwordRef.current = password
-
-    const isValidEmail = emailRef.current.indexOf('@') !== -1
-    const isValidPassword = passwordRef.current.length >= 8
-
     setBtnDisabled(!isValidEmail || !isValidPassword)
   }, [email, password])
 
@@ -34,11 +29,11 @@ export default function Signup() {
     }
   }, [accessToken, navigate])
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
