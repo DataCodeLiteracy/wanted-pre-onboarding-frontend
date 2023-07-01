@@ -2,9 +2,11 @@
   "compilerOptions": {
     "strict": true,
     "allowJs": true,
-    "target": "ES5",
+    "target": "ES6",
     "outDir": "./dist",
     "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
     "lib": ["ES2015", "DOM", "DOM.Iterable"]
   },
   "include": ["./src/**/*"],
