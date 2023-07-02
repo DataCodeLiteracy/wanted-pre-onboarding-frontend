@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { useState, useEffect, useRef } from 'react'
+import axios, { AxiosError } from 'axios'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SignWrapper, SignTitle, SignMain, SignForm } from '../styles/SignStyle'
 import { Button } from '../styles/HeaderStyle'
@@ -37,7 +37,7 @@ export default function Signup() {
     setPassword(e.target.value)
   }
 
-  const handleSignup = async (e) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const SIGNUP_API =
       'https://www.pre-onboarding-selection-task.shop/auth/signup'
@@ -60,10 +60,12 @@ export default function Signup() {
 
       navigate('/signin')
     } catch (error) {
-      if (error.response.status === 400) {
-        window.alert(error.response.data.message)
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 400) {
+          window.alert(error.response.data.message)
+        }
+        setError(error.response?.data.message)
       }
-      setError(error.response.data.message)
     }
   }
 
