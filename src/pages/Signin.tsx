@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppHeader from '../components/AppHeader'
@@ -9,7 +9,7 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [btnDisabled, setBtnDisabled] = useState(false)
-  const [accessToken, setAccessToken] = useState(null)
+  const [accessToken, setAccessToken] = useState<string | null>(null)
   const emailRef = useRef('')
   const passwordRef = useRef('')
 
@@ -38,20 +38,20 @@ export default function Signup() {
     }
   }, [accessToken, navigate])
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
   }
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
 
-  const saveToken = (token) => {
+  const saveToken = (token: string) => {
     setAccessToken(token)
     localStorage.setItem('access_token', token)
   }
 
-  const handleSignin = async (e) => {
+  const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const SIGNIN_API =
       'https://www.pre-onboarding-selection-task.shop/auth/signin'
@@ -78,12 +78,14 @@ export default function Signup() {
 
       window.alert('로그인이 완료되었습니다!')
     } catch (error) {
-      if (error.response.status === 404) {
-        window.alert(error.response.data.message)
-      } else if (error.response.status === 401) {
-        window.alert(error.response.data.message)
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 404) {
+          window.alert(error.response.data.message)
+        } else if (error.response?.status === 401) {
+          window.alert(error.response.data.message)
+        }
+        setError(error.response?.data.message)
       }
-      setError(error.response.data.message)
     }
   }
 
