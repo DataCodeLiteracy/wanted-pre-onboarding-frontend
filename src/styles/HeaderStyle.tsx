@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Button = styled.button`
   background: transparent;
@@ -10,13 +10,13 @@ export const Button = styled.button`
     background: rgba(195, 237, 92, 0.7)
   }
 }
-`;
+`
 
 export const FlexDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
+`
 
 export const Nav = styled.nav`
   display: flex;
@@ -24,4 +24,4 @@ export const Nav = styled.nav`
   align-items: center;
   width: 100%;
   border-bottom: 1px solid gray;
-`;
+`

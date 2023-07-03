@@ -1,21 +1,26 @@
-import React, { useState } from "react";
-import { TodoButton, Input, TodoInputMain } from "../styles/TodoStyle";
+import React, { useState } from 'react'
+import { TodoButton, Input, TodoInputMain } from '../styles/TodoStyle'
+import { onAddFunction } from '../pages/Todo'
 
-export default function TodoInput({ onAdd }) {
-  const [value, setValue] = useState("");
+interface OnAddProps {
+  onAdd: onAddFunction
+}
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+export default function TodoInput({ onAdd }: OnAddProps) {
+  const [value, setValue] = useState('')
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     if (value.trim().length === 0) {
-      return;
+      return
     }
-    onAdd(value);
-    setValue("");
-  };
+    onAdd(value)
+    setValue('')
+  }
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
+  }
   return (
     <TodoInputMain onSubmit={handleSubmit}>
       <Input
@@ -27,5 +32,5 @@ export default function TodoInput({ onAdd }) {
       />
       <TodoButton data-testid="new-todo-add-button">추가</TodoButton>
     </TodoInputMain>
-  );
+  )
 }

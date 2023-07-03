@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { REQUEST_URL } from './requestUrl'
+import { TodoType } from '../pages/Todo'
 
-export const createTodo = async (accessToken, todo) => {
+export const createTodo = async (accessToken: string | null, todo: string) => {
   const res = await axios.post(
     `${REQUEST_URL}/todos`,
     { todo: todo },
@@ -16,7 +17,7 @@ export const createTodo = async (accessToken, todo) => {
   return createdTodo
 }
 
-export const getTodos = async (accessToken) => {
+export const getTodos = async (accessToken: string | null) => {
   const res = await axios.get(`${REQUEST_URL}/todos`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
@@ -25,7 +26,10 @@ export const getTodos = async (accessToken) => {
   return res.data
 }
 
-export const updateTodo = async (accessToken, checked) => {
+export const updateTodo = async (
+  accessToken: string | null,
+  checked: TodoType
+) => {
   const res = await axios.put(
     `${REQUEST_URL}/todos/${checked.id}`,
     {
@@ -42,7 +46,10 @@ export const updateTodo = async (accessToken, checked) => {
   return res.data
 }
 
-export const deleteTodo = async (accessToken, deleted) => {
+export const deleteTodo = async (
+  accessToken: string | null,
+  deleted: TodoType
+) => {
   const res = await axios.delete(`${REQUEST_URL}/todos/${deleted.id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
