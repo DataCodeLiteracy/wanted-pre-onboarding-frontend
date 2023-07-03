@@ -1,7 +1,9 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import React, { useContext } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
+import { REQUEST_URL } from '../api/requestUrl'
+import AuthApi from '../api/AuthApi'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -22,22 +24,10 @@ export default function Signup() {
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const SIGNIN_API =
-      'https://www.pre-onboarding-selection-task.shop/auth/signin'
+    const SIGNIN_API = REQUEST_URL + '/auth/signin'
 
     try {
-      const res = await axios.post(
-        SIGNIN_API,
-        {
-          email,
-          password
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      )
+      const res = await AuthApi({ SIGN: SIGNIN_API, email, password })
 
       const { access_token } = res.data
       if (access_token) {

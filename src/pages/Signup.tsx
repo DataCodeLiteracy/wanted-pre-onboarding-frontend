@@ -1,7 +1,9 @@
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import { useContext } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
+import { REQUEST_URL } from '../api/requestUrl'
+import AuthApi from '../api/AuthApi'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -18,22 +20,10 @@ export default function Signup() {
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const SIGNUP_API =
-      'https://www.pre-onboarding-selection-task.shop/auth/signup'
+    const SIGNUP_API = REQUEST_URL + '/auth/signup'
 
     try {
-      const res = await axios.post(
-        SIGNUP_API,
-        {
-          email,
-          password
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      )
+      await AuthApi({ SIGN: SIGNUP_API, email, password })
 
       window.alert('회원가입이 완료되었습니다!')
 

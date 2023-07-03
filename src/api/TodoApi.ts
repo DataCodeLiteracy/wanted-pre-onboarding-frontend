@@ -1,6 +1,5 @@
-import axios from "axios";
-
-const REQUEST_URL = "https://www.pre-onboarding-selection-task.shop";
+import axios from 'axios'
+import { REQUEST_URL } from './requestUrl'
 
 export const createTodo = async (accessToken, todo) => {
   const res = await axios.post(
@@ -9,22 +8,22 @@ export const createTodo = async (accessToken, todo) => {
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     }
-  );
-  const createdTodo = res.data;
-  return createdTodo;
-};
+  )
+  const createdTodo = res.data
+  return createdTodo
+}
 
 export const getTodos = async (accessToken) => {
   const res = await axios.get(`${REQUEST_URL}/todos`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
-  });
-  return res.data;
-};
+  })
+  return res.data
+}
 
 export const updateTodo = async (accessToken, checked) => {
   const res = await axios.put(
@@ -36,19 +35,19 @@ export const updateTodo = async (accessToken, checked) => {
     {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     }
-  );
-  return res.data;
-};
+  )
+  return res.data
+}
 
 export const deleteTodo = async (accessToken, deleted) => {
   const res = await axios.delete(`${REQUEST_URL}/todos/${deleted.id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     }
-  });
-  return res.data;
-};
+  })
+  return res.data
+}
