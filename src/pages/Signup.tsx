@@ -1,9 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { useContext } from 'react'
-import { SignWrapper, SignTitle, SignMain, SignForm } from '../styles/SignStyle'
-import { Button } from '../styles/HeaderStyle'
-import AppHeader from '../components/AppHeader'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
+import Auth from '../components/Auth'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -12,15 +10,7 @@ export default function Signup() {
     return
   }
 
-  const {
-    email,
-    password,
-    btnDisabled,
-    accessToken,
-    navigate,
-    handleEmailChange,
-    handlePasswordChange
-  } = authContext
+  const { email, password, accessToken, navigate } = authContext
 
   if (accessToken) {
     navigate('/todo')
@@ -58,50 +48,6 @@ export default function Signup() {
   }
 
   return (
-    <SignWrapper>
-      <AppHeader
-        navigate={navigate}
-        showLogoutButton={false}
-        showHomeButton={true}
-        showSignupButton={false}
-        showSigninButton={true}
-      />
-      <SignMain>
-        <SignTitle>회원가입</SignTitle>
-        <SignForm onSubmit={handleSignup}>
-          <div>
-            <label htmlFor="email">이메일</label>
-            <input
-              id="email"
-              data-testid="email-input"
-              type="text"
-              placeholder="이메일 입력"
-              autoComplete="on"
-              value={email}
-              onChange={handleEmailChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">비밀번호</label>
-            <input
-              id="password"
-              data-testid="password-input"
-              type="password"
-              placeholder="비밀번호 입력"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </div>
-
-          <Button
-            data-testid="signup-button"
-            type="submit"
-            disabled={btnDisabled}
-          >
-            가입하기
-          </Button>
-        </SignForm>
-      </SignMain>
-    </SignWrapper>
+    <Auth sign={'회원가입'} signBtn={'가입하기'} handleSign={handleSignup} />
   )
 }

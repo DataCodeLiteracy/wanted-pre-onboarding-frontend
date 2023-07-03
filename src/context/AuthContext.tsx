@@ -25,7 +25,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setBtnDisabled(!isValidEmail || !isValidPassword)
-  }, [email, password])
+  }, [isValidEmail, isValidPassword])
 
   useEffect(() => {
     if (accessToken) {
