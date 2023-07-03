@@ -9,7 +9,7 @@ export default function Home() {
     <Wrapper>
       <AppHeader
         navigate={navigate}
-        handleLogout={false}
+        showLogoutButton={false}
         showHomeButton={false}
         showSignupButton={true}
         showSigninButton={true}

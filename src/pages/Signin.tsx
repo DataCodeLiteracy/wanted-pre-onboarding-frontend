@@ -1,53 +1,31 @@
 import axios, { AxiosError } from 'axios'
-import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext } from 'react'
 import AppHeader from '../components/AppHeader'
 import { SignForm, SignTitle, SignWrapper, SignMain } from '../styles/SignStyle'
+import { AuthContext, AuthContextProps } from '../context/AuthContext'
 
 export default function Signup() {
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
-  const [error, setError] = useState('')
-  const [btnDisabled, setBtnDisabled] = useState(false)
-  const [accessToken, setAccessToken] = useState<string | null>(null)
-  const emailRef = useRef('')
-  const passwordRef = useRef('')
+  const authContext = useContext<AuthContextProps | null>(AuthContext)
 
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    emailRef.current = email
-    passwordRef.current = password
-
-    const isValidEmail = emailRef.current.indexOf('@') !== -1
-    const isValidPassword = passwordRef.current.length >= 8
-
-    setBtnDisabled(!isValidEmail || !isValidPassword)
-  }, [email, password])
-
-  useEffect(() => {
-    const token = localStorage.getItem('access_token')
-    if (token) {
-      setAccessToken(token)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (accessToken) {
-      navigate('/todo')
-    }
-  }, [accessToken, navigate])
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+  if (!authContext) {
+    return
   }
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
+  const {
+    email,
+    password,
+    btnDisabled,
+    accessToken,
+    navigate,
+    handleEmailChange,
+    handlePasswordChange
+  } = authContext
+
+  if (accessToken) {
+    navigate('/todo')
   }
 
   const saveToken = (token: string) => {
-    setAccessToken(token)
     localStorage.setItem('access_token', token)
   }
 
@@ -84,7 +62,6 @@ export default function Signup() {
         } else if (error.response?.status === 401) {
           window.alert(error.response.data.message)
         }
-        setError(error.response?.data.message)
       }
     }
   }
@@ -93,7 +70,7 @@ export default function Signup() {
     <SignWrapper>
       <AppHeader
         navigate={navigate}
-        handleLogout={false}
+        showLogoutButton={false}
         showHomeButton={true}
         showSignupButton={true}
         showSigninButton={false}

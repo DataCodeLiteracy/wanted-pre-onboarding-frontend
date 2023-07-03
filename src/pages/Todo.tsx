@@ -66,19 +66,12 @@ export default function Todo() {
     }
   }, [accessToken, navigate])
 
-  const handleLogout = () => {
-    localStorage.removeItem('access_token')
-    setAccessToken('')
-    window.alert('로그아웃 되었습니다.')
-    navigate('/')
-  }
-
   return (
     <TodoWrapper>
       {/* <TodoHeader /> */}
       <AppHeader
         navigate={navigate}
-        handleLogout={handleLogout}
+        showLogoutButton={true}
         showHomeButton={true}
         showSignupButton={false}
         showSigninButton={false}

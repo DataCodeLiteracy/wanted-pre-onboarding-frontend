@@ -1,40 +1,29 @@
 import axios, { AxiosError } from 'axios'
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
 import { SignWrapper, SignTitle, SignMain, SignForm } from '../styles/SignStyle'
 import { Button } from '../styles/HeaderStyle'
 import AppHeader from '../components/AppHeader'
+import { AuthContext, AuthContextProps } from '../context/AuthContext'
 
 export default function Signup() {
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
-  const [error, setError] = useState('')
-  const [btnDisabled, setBtnDisabled] = useState(false)
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem('access_token') || ''
-  )
+  const authContext = useContext<AuthContextProps | null>(AuthContext)
 
-  const navigate = useNavigate()
-
-  const isValidEmail = email.indexOf('@') !== -1
-  const isValidPassword = password.length >= 8
-
-  useEffect(() => {
-    setBtnDisabled(!isValidEmail || !isValidPassword)
-  }, [email, password])
-
-  useEffect(() => {
-    if (accessToken) {
-      navigate('/todo')
-    }
-  }, [accessToken, navigate])
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+  if (!authContext) {
+    return
   }
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
+  const {
+    email,
+    password,
+    btnDisabled,
+    accessToken,
+    navigate,
+    handleEmailChange,
+    handlePasswordChange
+  } = authContext
+
+  if (accessToken) {
+    navigate('/todo')
   }
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,7 +53,6 @@ export default function Signup() {
         if (error.response?.status === 400) {
           window.alert(error.response.data.message)
         }
-        setError(error.response?.data.message)
       }
     }
   }
@@ -73,7 +61,7 @@ export default function Signup() {
     <SignWrapper>
       <AppHeader
         navigate={navigate}
-        handleLogout={false}
+        showLogoutButton={false}
         showHomeButton={true}
         showSignupButton={false}
         showSigninButton={true}
