@@ -78,7 +78,7 @@ export const LI = styled.li`
   height: 20px;
 `
 
-export const Label = styled.label`
+export const Label = styled.label<{ completed: boolean }>`
   overflow-x: auto;
   margin-left: 20px;
   width: 200px;

@@ -9,7 +9,7 @@ export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
   if (!authContext) {
-    return
+    return null
   }
 
   const { email, password, accessToken, navigate } = authContext

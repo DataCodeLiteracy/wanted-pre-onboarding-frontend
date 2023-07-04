@@ -12,7 +12,7 @@ const Auth = ({ sign, signBtn, handleSign }: AuthProps) => {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
   if (!authContext) {
-    return
+    return null
   }
 
   const {

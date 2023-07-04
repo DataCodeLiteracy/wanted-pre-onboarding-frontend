@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   MdDeleteForever,
   MdOutlineCancel,
@@ -26,6 +26,8 @@ export default function TodoList({
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
 
+  const inputRef = useRef<HTMLInputElement | null>(null)
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isCompleted = e.target.checked ? true : false
     onCheck({ ...todoItem, isCompleted })
@@ -36,6 +38,13 @@ export default function TodoList({
     setIsEditing(true)
     setEditValue(todo)
   }
+
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current?.focus()
+    }
+  }, [isEditing])
+
   const handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditValue(e.target.value)
   }
@@ -45,7 +54,7 @@ export default function TodoList({
     setIsEditing(false)
     setEditValue('')
   }
-  const handleCancel = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setIsEditing(false)
   }
@@ -59,23 +68,21 @@ export default function TodoList({
         checked={isCompleted === true}
       />
       {isEditing && (
-        <>
+        <form onSubmit={handleEditSubmit}>
           <input
+            ref={inputRef}
             data-testid="modify-input"
             type="text"
             onChange={handleEditInput}
             value={editValue}
           />
-          <TodoListButton
-            data-testid="submit-button"
-            onClick={handleEditSubmit}
-          >
+          <TodoListButton data-testid="submit-button" type="submit">
             <MdFileDownloadDone />
           </TodoListButton>
           <TodoListButton data-testid="cancel-button" onClick={handleCancel}>
             <MdOutlineCancel />
           </TodoListButton>
-        </>
+        </form>
       )}
       {!isEditing && (
         <>
