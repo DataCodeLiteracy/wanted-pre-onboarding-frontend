@@ -1,9 +1,17 @@
-import axios from 'axios'
+import { TodoType } from './../pages/Todo'
 import { REQUEST_URL } from './requestUrl'
-import { TodoType } from '../pages/Todo'
+import APIClient from './Apiclient'
+
+const accessToken = localStorage.getItem('access_token')
+
+const api = new APIClient(REQUEST_URL, {
+  headers: {
+    Authorization: `Bearer ${accessToken}`
+  }
+})
 
 export const createTodo = async (accessToken: string | null, todo: string) => {
-  const res = await axios.post(
+  return await api.post(
     `${REQUEST_URL}/todos`,
     { todo: todo },
     {
@@ -13,24 +21,21 @@ export const createTodo = async (accessToken: string | null, todo: string) => {
       }
     }
   )
-  const createdTodo = res.data
-  return createdTodo
 }
 
 export const getTodos = async (accessToken: string | null) => {
-  const res = await axios.get(`${REQUEST_URL}/todos`, {
+  return await api.get(`${REQUEST_URL}/todos`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     }
   })
-  return res.data
 }
 
 export const updateTodo = async (
   accessToken: string | null,
   checked: TodoType
 ) => {
-  const res = await axios.put(
+  return await api.put(
     `${REQUEST_URL}/todos/${checked.id}`,
     {
       todo: checked.todo,
@@ -43,18 +48,16 @@ export const updateTodo = async (
       }
     }
   )
-  return res.data
 }
 
 export const deleteTodo = async (
   accessToken: string | null,
   deleted: TodoType
 ) => {
-  const res = await axios.delete(`${REQUEST_URL}/todos/${deleted.id}`, {
+  return await api.delete(`${REQUEST_URL}/todos/${deleted.id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
     }
   })
-  return res.data
 }

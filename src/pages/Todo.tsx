@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import TodoInput from '../components/TodoInput'
 import TodoList from '../components/TodoList'
 import { useNavigate } from 'react-router-dom'
@@ -20,7 +20,6 @@ const accessToken = localStorage.getItem('access_token')
 
 export default function Todo() {
   const [todos, setTodos] = useState<TodoType[]>([])
-
   useEffect(() => {
     const fetchTodos = async () => {
       const todos = await readTodo()
@@ -29,11 +28,9 @@ export default function Todo() {
 
     fetchTodos()
   }, [])
-
   const handleAdd = async (todo: string) => {
     try {
       const createdTodo = await createTodo(accessToken, todo)
-
       setTodos([...todos, createdTodo])
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -79,7 +76,7 @@ export default function Todo() {
       window.location.href = '/signin'
       return
     }
-  }, [accessToken, navigate])
+  }, [accessToken])
 
   return (
     <TodoWrapper>
