@@ -1,6 +1,12 @@
 import { useContext } from 'react'
 import AppHeader from '../components/AppHeader'
-import { SignForm, SignTitle, SignWrapper, SignMain } from '../styles/SignStyle'
+import {
+  SignForm,
+  SignTitle,
+  SignWrapper,
+  SignMain,
+  ValidLabel
+} from '../styles/SignStyle'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 interface AuthProps {
   sign: string
@@ -19,6 +25,8 @@ const Auth = ({ sign, signBtn, handleSign }: AuthProps) => {
     email,
     password,
     btnDisabled,
+    isValidEmail,
+    isValidPassword,
     navigate,
     handleEmailChange,
     handlePasswordChange
@@ -45,6 +53,11 @@ const Auth = ({ sign, signBtn, handleSign }: AuthProps) => {
               value={email}
               onChange={handleEmailChange}
             />
+            {!isValidEmail && (
+              <ValidLabel htmlFor="email">
+                이메일에 @ 기호가 없습니다.
+              </ValidLabel>
+            )}
           </div>
           <div>
             <label htmlFor="password">비밀번호</label>
@@ -56,6 +69,11 @@ const Auth = ({ sign, signBtn, handleSign }: AuthProps) => {
               value={password}
               onChange={handlePasswordChange}
             />
+            {!isValidPassword && (
+              <ValidLabel htmlFor="email">
+                비밀번호는 8자 이상이여야 합니다.
+              </ValidLabel>
+            )}
           </div>
 
           <button

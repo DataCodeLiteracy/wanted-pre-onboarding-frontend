@@ -6,6 +6,8 @@ export interface AuthContextProps {
   password: string
   btnDisabled: boolean
   accessToken: string | null
+  isValidEmail: boolean
+  isValidPassword: boolean
   navigate: NavigateFunction
   handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -48,6 +50,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     password,
     btnDisabled,
     accessToken,
+    isValidEmail,
+    isValidPassword,
     navigate,
     handleEmailChange,
     handlePasswordChange
