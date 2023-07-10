@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const SignWrapper = styled.section`
   box-sizing: border-box;
@@ -13,7 +13,7 @@ export const SignWrapper = styled.section`
   min-height: 500px;
   border: 1px solid #c5dcf1;
   border-radius: 5px;
-`;
+`
 
 export const SignMain = styled.section`
   display: flex;
@@ -25,13 +25,13 @@ export const SignMain = styled.section`
   background-color: rgba(248, 241, 246, 0.2);
   margin-top: 10px;
   border: 1px solid rgba(248, 241, 246, 0.2);
-`;
+`
 
 export const SignTitle = styled.h1`
   font-size: 1rem;
   text-align: center;
   margin-bottom: 100px;
-`;
+`
 
 export const SignForm = styled.form`
   display: flex;
@@ -40,4 +40,12 @@ export const SignForm = styled.form`
   justify-content: space-around;
   width: 95%;
   height: 150px;
-`;
+`
+
+export const ValidLabel = styled.label`
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: red;
+  padding-top: 15px;
+`

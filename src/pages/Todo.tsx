@@ -1,18 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import TodoInput from '../components/TodoInput'
 import TodoList from '../components/TodoList'
 import { useNavigate } from 'react-router-dom'
 import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, UL } from '../styles/TodoStyle'
+import { AxiosError } from 'axios'
+
+export type onAddFunction = (todo: string) => void
+export type OnTodoFunction = (todoItem: TodoType) => void
+export interface TodoType {
+  id: number
+  todo: string
+  isCompleted: boolean
+  userId: number
+}
+
+const accessToken = localStorage.getItem('access_token')
 
 export default function Todo() {
-  const [todos, setTodos] = useState([])
-  const [error, setError] = useState('')
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem('access_token') || ''
-  )
-
+  const [todos, setTodos] = useState<TodoType[]>([])
   useEffect(() => {
     const fetchTodos = async () => {
       const todos = await readTodo()
@@ -21,31 +28,32 @@ export default function Todo() {
 
     fetchTodos()
   }, [])
-
-  const handleAdd = async (todo) => {
+  const handleAdd = async (todo: string) => {
     try {
       const createdTodo = await createTodo(accessToken, todo)
-
       setTodos([...todos, createdTodo])
     } catch (error) {
-      setError(error.response.data.message)
+      if (error instanceof AxiosError) {
+        window.alert(error.response?.data.message)
+      }
     }
   }
 
-  const handleDelete = (deleted) => {
-    deleteTodo(accessToken, deleted)
-    setTodos(todos.filter((todo) => todo.id !== deleted.id))
+  const handleDelete = (todoItem: TodoType) => {
+    deleteTodo(accessToken, todoItem)
+    setTodos(todos.filter((item) => item.id !== todoItem.id))
   }
 
-  const handleCheck = (checked) => {
-    updateTodo(accessToken, checked)
-    setTodos(todos.map((todo) => (todo.id === checked.id ? checked : todo)))
+  const handleCheck = (todoItem: TodoType) => {
+    updateTodo(accessToken, todoItem)
+    setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
   }
 
-  const handleEdit = (edited) => {
+  const handleEdit = (todoItem: TodoType) => {
+    updateTodo(accessToken, todoItem)
     setTodos(
-      todos.map((todo) =>
-        todo.id === edited.id ? { ...todo, text: edited.text } : todo
+      todos.map((item) =>
+        item.id === todoItem.id ? { ...item, todo: todoItem.todo } : item
       )
     )
   }
@@ -53,9 +61,13 @@ export default function Todo() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleError = (e) => {
-      e.preventDefault()
-      e.stopPropagation()
+    const handleError: OnErrorEventHandler = (
+      eventOrMessage: string | Event | ErrorEvent
+    ) => {
+      if (eventOrMessage instanceof Event) {
+        eventOrMessage.preventDefault()
+        eventOrMessage.stopPropagation()
+      }
     }
 
     window.onerror = handleError
@@ -64,21 +76,14 @@ export default function Todo() {
       window.location.href = '/signin'
       return
     }
-  }, [accessToken, navigate])
-
-  const handleLogout = () => {
-    localStorage.removeItem('access_token')
-    setAccessToken('')
-    window.alert('로그아웃 되었습니다.')
-    navigate('/')
-  }
+  }, [accessToken])
 
   return (
     <TodoWrapper>
       {/* <TodoHeader /> */}
       <AppHeader
         navigate={navigate}
-        handleLogout={handleLogout}
+        showLogoutButton={true}
         showHomeButton={true}
         showSignupButton={false}
         showSigninButton={false}
@@ -105,6 +110,6 @@ export default function Todo() {
 }
 
 async function readTodo() {
-  const res = await getTodos(localStorage.getItem('access_token'))
+  const res = await getTodos(accessToken)
   return res
 }

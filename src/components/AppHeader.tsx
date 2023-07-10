@@ -1,16 +1,27 @@
-// AppHeader.jsx
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { NavigateFunction } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 
 export default function AppHeader({
   navigate,
-  handleLogout,
+  showLogoutButton,
   showHomeButton,
   showSignupButton,
   showSigninButton
+}: {
+  navigate: NavigateFunction
+  showLogoutButton: boolean
+  showHomeButton: boolean
+  showSignupButton: boolean
+  showSigninButton: boolean
 }) {
+  const handleLogout = () => {
+    localStorage.removeItem('access_token')
+    localStorage.setItem('access_token', '')
+    window.alert('로그아웃 되었습니다.')
+    navigate('/')
+  }
+
   return (
     <Nav>
       <h1>Wanted-Pre-Onboarding</h1>
@@ -42,7 +53,7 @@ export default function AppHeader({
             로그인
           </Button>
         )}
-        {handleLogout && (
+        {showLogoutButton && (
           <Button data-testid="logout-button" onClick={handleLogout}>
             로그아웃
           </Button>
