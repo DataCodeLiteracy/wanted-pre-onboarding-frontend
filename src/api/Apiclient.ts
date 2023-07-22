@@ -7,7 +7,7 @@ class APIClient {
     this.api = axios.create({ baseURL, ...config })
   }
 
-  get(url: string, headers: Record<string, Record<string, string>>) {
+  get(url: string, headers: Record<string, string>) {
     return this.api
       .get(url, headers)
       .then((res) => res.data)
@@ -16,7 +16,7 @@ class APIClient {
       })
   }
 
-  post(url: string, body: object, headers: object) {
+  post(url: string, body: object, headers: Record<string, string>) {
     return this.api
       .post(url, body, headers)
       .then((res) => res.data)
@@ -25,7 +25,7 @@ class APIClient {
       })
   }
 
-  put(url: string, body: object, headers: object) {
+  put(url: string, body: object, headers: Record<string, string>) {
     return this.api
       .put(url, body, headers)
       .then((res) => res.data)
@@ -34,7 +34,7 @@ class APIClient {
       })
   }
 
-  delete(url: string, headers: object) {
+  delete(url: string, headers: Record<string, string>) {
     return this.api
       .delete(url, headers)
       .then((res) => res.data)

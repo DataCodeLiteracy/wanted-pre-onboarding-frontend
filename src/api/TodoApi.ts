@@ -15,19 +15,15 @@ export const createTodo = async (accessToken: string | null, todo: string) => {
     `${REQUEST_URL}/todos`,
     { todo: todo },
     {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
     }
   )
 }
 
 export const getTodos = async (accessToken: string | null) => {
   return await api.get(`${REQUEST_URL}/todos`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    }
+    Authorization: `Bearer ${accessToken}`
   })
 }
 
@@ -42,10 +38,8 @@ export const updateTodo = async (
       isCompleted: checked.isCompleted
     },
     {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json'
-      }
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
     }
   )
 }
@@ -55,9 +49,7 @@ export const deleteTodo = async (
   deleted: TodoType
 ) => {
   return await api.delete(`${REQUEST_URL}/todos/${deleted.id}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json'
-    }
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'application/json'
   })
 }
