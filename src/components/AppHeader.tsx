@@ -4,16 +4,14 @@ import { AiFillHome } from 'react-icons/ai'
 
 export default function AppHeader({
   navigate,
-  showLogoutButton,
-  showHomeButton,
-  showSignupButton,
-  showSigninButton
+  isHomeButton,
+  isSignupButton,
+  isLogin
 }: {
   navigate: NavigateFunction
-  showLogoutButton: boolean
-  showHomeButton: boolean
-  showSignupButton: boolean
-  showSigninButton: boolean
+  isHomeButton: boolean
+  isSignupButton: boolean
+  isLogin: boolean
 }) {
   const handleLogout = () => {
     localStorage.removeItem('access_token')
@@ -26,7 +24,7 @@ export default function AppHeader({
     <Nav>
       <h1>Wanted-Pre-Onboarding</h1>
       <FlexDiv>
-        {showHomeButton && (
+        {isHomeButton && (
           <Button
             onClick={() => {
               navigate('/')
@@ -35,7 +33,7 @@ export default function AppHeader({
             <AiFillHome />
           </Button>
         )}
-        {showSignupButton && (
+        {isSignupButton && (
           <Button
             onClick={() => {
               navigate('/signup')
@@ -44,7 +42,7 @@ export default function AppHeader({
             회원가입
           </Button>
         )}
-        {showSigninButton && (
+        {isLogin && (
           <Button
             onClick={() => {
               navigate('/signin')
@@ -53,7 +51,7 @@ export default function AppHeader({
             로그인
           </Button>
         )}
-        {showLogoutButton && (
+        {!isLogin && (
           <Button data-testid="logout-button" onClick={handleLogout}>
             로그아웃
           </Button>

@@ -35,6 +35,8 @@ export default function Todo() {
     } catch (error) {
       if (error instanceof AxiosError) {
         window.alert(error.response?.data.message)
+      } else {
+        console.error(error.message)
       }
     }
   }
@@ -76,17 +78,15 @@ export default function Todo() {
       window.location.href = '/signin'
       return
     }
-  }, [accessToken])
+  }, [])
 
   return (
     <TodoWrapper>
-      {/* <TodoHeader /> */}
       <AppHeader
         navigate={navigate}
-        showLogoutButton={true}
-        showHomeButton={true}
-        showSignupButton={false}
-        showSigninButton={false}
+        isLogin={false}
+        isHomeButton={true}
+        isSignupButton={false}
       />
       <TodoMain>
         <TodoTitle>TODO LIST</TodoTitle>

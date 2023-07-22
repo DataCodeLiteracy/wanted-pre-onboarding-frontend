@@ -30,6 +30,7 @@ export const TodoMain = styled(SignMain)`
 
 export const TodoInputMain = styled.form`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 80%;
   height: 45px;
@@ -38,7 +39,7 @@ export const TodoInputMain = styled.form`
 export const TodoButton = styled(Button)`
   border: 1px solid #c5dcf1;
   background-color: rgba(132, 184, 87.84, 0.2);
-  margin: 0 10px 20px 10px;
+  margin: 0 10px 5px 10px;
 `
 
 export const TodoListButton = styled(TodoButton)`
@@ -50,7 +51,7 @@ export const Input = styled.input`
   border: 1px solid #c5dcf1;
   background-color: rgba(132, 184, 87.84, 0.2);
   width: 70%;
-  margin: 0 0 20px 0;
+  margin: 0 0 5px 0;
 `
 
 export const ListInput = styled(Input)`
@@ -84,4 +85,11 @@ export const Label = styled.label<{ completed: boolean }>`
   width: 200px;
   height: 20px;
   text-decoration: ${(props) => (props.completed ? 'line-through' : 'none')};
+`
+
+export const Message = styled.div`
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 5px 0;
+  color: red;
 `

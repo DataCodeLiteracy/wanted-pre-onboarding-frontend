@@ -24,11 +24,11 @@ export const createTodo = async (accessToken: string | null, todo: string) => {
 }
 
 export const getTodos = async (accessToken: string | null) => {
-  return await api.get(`${REQUEST_URL}/todos`, {
-    headers: {
+  return await api.get(`${REQUEST_URL}/todos`, 
+    {
       Authorization: `Bearer ${accessToken}`
     }
-  })
+  )
 }
 
 export const updateTodo = async (

@@ -65,7 +65,7 @@ export default function TodoList({
         type="checkbox"
         id={`checkbox-${todoItem.id}`}
         onChange={handleChange}
-        checked={isCompleted === true}
+        checked={isCompleted}
       />
       {isEditing && (
         <form onSubmit={handleEditSubmit}>

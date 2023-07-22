@@ -9,10 +9,9 @@ export default function Home() {
     <Wrapper>
       <AppHeader
         navigate={navigate}
-        showLogoutButton={false}
-        showHomeButton={false}
-        showSignupButton={true}
-        showSigninButton={true}
+        isHomeButton={false}
+        isSignupButton={true}
+        isLogin={true}
       />
       <Main>
         <Title>FRONTEND</Title>

@@ -4,6 +4,8 @@ import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import { REQUEST_URL } from '../api/requestUrl'
 import AuthApi from '../api/AuthApi'
+import AppHeader from '../components/AppHeader'
+import { SignWrapper } from '../styles/SignStyle'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -38,6 +40,14 @@ export default function Signup() {
   }
 
   return (
-    <Auth sign={'회원가입'} signBtn={'가입하기'} handleSign={handleSignup} />
+    <SignWrapper>
+      <AppHeader
+        navigate={navigate}
+        isHomeButton={true}
+        isSignupButton={false}
+        isLogin={true}
+      />
+      <Auth title={'회원가입'} signBtn={'가입하기'} handleSign={handleSignup} />
+    </SignWrapper>
   )
 }
