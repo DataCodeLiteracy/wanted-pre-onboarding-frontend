@@ -7,7 +7,7 @@ class APIClient {
     this.api = axios.create({ baseURL, ...config })
   }
 
-  get(url: string, headers: object) {
+  get(url: string, headers: Record<string, Record<string, string>>) {
     return this.api
       .get(url, headers)
       .then((res) => res.data)
