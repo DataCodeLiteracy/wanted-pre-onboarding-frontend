@@ -16,7 +16,11 @@ class APIClient {
       })
   }
 
-  post(url: string, body: object, headers: Record<string, string>) {
+  post(
+    url: string,
+    body: Record<string, string>,
+    headers: Record<string, string>
+  ) {
     return this.api
       .post(url, body, headers)
       .then((res) => res.data)
@@ -25,7 +29,11 @@ class APIClient {
       })
   }
 
-  put(url: string, body: object, headers: Record<string, string>) {
+  put(
+    url: string,
+    body: Record<string, string | boolean>,
+    headers: Record<string, string>
+  ) {
     return this.api
       .put(url, body, headers)
       .then((res) => res.data)
