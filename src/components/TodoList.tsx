@@ -34,16 +34,11 @@ export default function TodoList({
   }
 
   const handleDelete = () => onDelete(todoItem)
+
   const handleEditCheck = () => {
     setIsEditing(true)
     setEditValue(todo)
   }
-
-  useEffect(() => {
-    if (isEditing) {
-      inputRef.current?.focus()
-    }
-  }, [isEditing])
 
   const handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditValue(e.target.value)
@@ -58,6 +53,12 @@ export default function TodoList({
     e.preventDefault()
     setIsEditing(false)
   }
+
+  useEffect(() => {
+    if (isEditing) {
+      inputRef.current?.focus()
+    }
+  }, [isEditing])
 
   return (
     <LI>

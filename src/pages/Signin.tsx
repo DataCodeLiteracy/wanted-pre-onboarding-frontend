@@ -25,6 +25,7 @@ export default function Signup() {
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     const endpoint = '/auth/signin'
 
     try {

@@ -23,6 +23,7 @@ export default function Signup() {
     e.preventDefault()
 
     const endpoint = '/auth/signup'
+
     try {
       await AuthApi({ endpoint, email, password })
 

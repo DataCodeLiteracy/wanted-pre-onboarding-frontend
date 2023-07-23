@@ -19,8 +19,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [btnDisabled, setBtnDisabled] = useState(false)
-  const accessToken = localStorage.getItem('access_token')
   const navigate = useNavigate()
+
+  const accessToken = localStorage.getItem('access_token')
 
   const isValidEmail = email.indexOf('@') !== -1
   const isValidPassword = password.length >= 8
