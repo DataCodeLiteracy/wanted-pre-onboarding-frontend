@@ -1,14 +1,15 @@
 import axios from 'axios'
+import { REQUEST_URL } from './requestUrl'
 
 interface AuthApiProps {
-  SIGN: string
+  endpoint: string
   email: string
   password: string
 }
 
-const AuthApi = async ({ SIGN, email, password }: AuthApiProps) => {
+const AuthApi = async ({ endpoint, email, password }: AuthApiProps) => {
   const res = await axios.post(
-    SIGN,
+    REQUEST_URL + endpoint,
     {
       email,
       password
