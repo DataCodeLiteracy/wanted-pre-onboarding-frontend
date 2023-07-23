@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, UL } from '../styles/TodoStyle'
-import { AxiosError } from 'axios'
+import useError from '../Hooks/useError'
 
 export type onAddFunction = (todo: string) => void
 export type OnTodoFunction = (todoItem: TodoType) => void
@@ -20,6 +20,7 @@ const accessToken = localStorage.getItem('access_token')
 
 export default function Todo() {
   const [todos, setTodos] = useState<TodoType[]>([])
+  const { showError, handleError } = useError()
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -35,31 +36,43 @@ export default function Todo() {
       const createdTodo = await createTodo(accessToken, todo)
       setTodos([...todos, createdTodo])
     } catch (error) {
-      if (error instanceof AxiosError) {
-        window.alert(error.response?.data.message)
-      } else {
-        console.error(error.message)
-      }
+      handleError(error)
+      showError(error)
     }
   }
 
   const handleDelete = (todoItem: TodoType) => {
-    deleteTodo(accessToken, todoItem)
-    setTodos(todos.filter((item) => item.id !== todoItem.id))
+    try {
+      deleteTodo(accessToken, todoItem)
+      setTodos(todos.filter((item) => item.id !== todoItem.id))
+    } catch (error) {
+      handleError(error)
+      showError(error)
+    }
   }
 
   const handleCheck = (todoItem: TodoType) => {
-    updateTodo(accessToken, todoItem)
-    setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
+    try {
+      updateTodo(accessToken, todoItem)
+      setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
+    } catch (error) {
+      handleError(error)
+      showError(error)
+    }
   }
 
   const handleEdit = (todoItem: TodoType) => {
-    updateTodo(accessToken, todoItem)
-    setTodos(
-      todos.map((item) =>
-        item.id === todoItem.id ? { ...item, todo: todoItem.todo } : item
+    try {
+      updateTodo(accessToken, todoItem)
+      setTodos(
+        todos.map((item) =>
+          item.id === todoItem.id ? { ...item, todo: todoItem.todo } : item
+        )
       )
-    )
+    } catch (error) {
+      handleError(error)
+      showError(error)
+    }
   }
 
   const navigate = useNavigate()

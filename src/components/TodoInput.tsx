@@ -11,15 +11,23 @@ export default function TodoInput({ onAdd }: OnAddProps) {
   const [isValidInput, setIsValidInput] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    onAdd(value)
-    setValue('')
-    setIsValidInput(true)
+    try {
+      e.preventDefault()
+      onAdd(value)
+      setValue('')
+      setIsValidInput(true)
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
-    setIsValidInput(false)
+    try {
+      setValue(e.target.value)
+      setIsValidInput(false)
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
 
   return (

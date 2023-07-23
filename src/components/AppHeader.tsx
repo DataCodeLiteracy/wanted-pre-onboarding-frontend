@@ -1,6 +1,7 @@
 import { NavigateFunction } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
+import useError from '../Hooks/useError'
 
 export default function AppHeader({
   navigate,
@@ -14,10 +15,14 @@ export default function AppHeader({
   isLogin: boolean
 }) {
   const handleLogout = () => {
-    localStorage.removeItem('access_token')
-    localStorage.setItem('access_token', '')
-    window.alert('로그아웃 되었습니다.')
-    navigate('/')
+    try {
+      localStorage.removeItem('access_token')
+      localStorage.setItem('access_token', '')
+      window.alert('로그아웃 되었습니다.')
+      navigate('/')
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
 
   return (

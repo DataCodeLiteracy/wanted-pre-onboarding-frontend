@@ -29,29 +29,55 @@ export default function TodoList({
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isCompleted = e.target.checked ? true : false
-    onCheck({ ...todoItem, isCompleted })
+    try {
+      const isCompleted = e.target.checked ? true : false
+      onCheck({ ...todoItem, isCompleted })
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
 
-  const handleDelete = () => onDelete(todoItem)
+  const handleDelete = () => {
+    try {
+      onDelete(todoItem)
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
+  }
 
   const handleEditCheck = () => {
-    setIsEditing(true)
-    setEditValue(todo)
+    try {
+      setIsEditing(true)
+      setEditValue(todo)
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
 
   const handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditValue(e.target.value)
+    try {
+      setEditValue(e.target.value)
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    onEdit({ ...todoItem, todo: editValue })
-    setIsEditing(false)
-    setEditValue('')
+    try {
+      e.preventDefault()
+      onEdit({ ...todoItem, todo: editValue })
+      setIsEditing(false)
+      setEditValue('')
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setIsEditing(false)
+    try {
+      e.preventDefault()
+      setIsEditing(false)
+    } catch (error) {
+      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+    }
   }
 
   useEffect(() => {

@@ -45,6 +45,8 @@ export default function Signup() {
         } else if (error.response?.status === 401) {
           window.alert(error.response.data.message)
         }
+      } else {
+        console.error(error.message || '알 수 없는 에러가 발생 했습니다')
       }
     }
   }
