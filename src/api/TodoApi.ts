@@ -1,10 +1,9 @@
 import { TodoType } from './../pages/Todo'
 import { REQUEST_URL } from './requestUrl'
 import APIClient from './Apiclient'
+import localToken from './LocalToken'
 
-const accessToken = localStorage.getItem('access_token')
-
-const api = new APIClient(REQUEST_URL, accessToken)
+const api = new APIClient(REQUEST_URL, localToken.get())
 
 export const createTodo = async (accessToken: string | null, todo: string) => {
   return await api.post(

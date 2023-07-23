@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useState, useEffect } from 'react'
 import { NavigateFunction, useNavigate } from 'react-router-dom'
+import localToken from '../api/LocalToken'
 
 export interface AuthContextProps {
   email: string
@@ -21,7 +22,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [btnDisabled, setBtnDisabled] = useState(false)
   const navigate = useNavigate()
 
-  const accessToken = localStorage.getItem('access_token')
+  const accessToken = localToken.get()
 
   const isValidEmail = email.indexOf('@') !== -1
   const isValidPassword = password.length >= 8

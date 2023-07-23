@@ -1,7 +1,7 @@
 import { NavigateFunction } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
-import useError from '../Hooks/useError'
+import localToken from '../api/LocalToken'
 
 export default function AppHeader({
   navigate,
@@ -16,8 +16,8 @@ export default function AppHeader({
 }) {
   const handleLogout = () => {
     try {
-      localStorage.removeItem('access_token')
-      localStorage.setItem('access_token', '')
+      localToken.remove()
+      localToken.save('')
       window.alert('로그아웃 되었습니다.')
       navigate('/')
     } catch (error) {

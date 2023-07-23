@@ -5,6 +5,7 @@ import Auth from '../components/Auth'
 import AuthApi from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
 import { SignWrapper } from '../styles/SignStyle'
+import localToken from '../api/LocalToken'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -20,7 +21,7 @@ export default function Signup() {
   }
 
   const saveToken = (token: string) => {
-    localStorage.setItem('access_token', token)
+    localToken.save(token)
   }
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { REQUEST_URL } from './requestUrl'
+// import localToken from './LocalToken'
 
 class APIClient {
   #api: AxiosInstance
@@ -7,12 +8,12 @@ class APIClient {
 
   constructor(
     baseURL: string,
-    accessToken: string,
+    localToken: string,
     config?: AxiosRequestConfig
   ) {
     this.#api = axios.create({ baseURL, ...config })
     this.headers = {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${localToken}`
     }
 
     this.#api.defaults.headers.common = this.headers

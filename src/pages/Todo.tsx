@@ -6,6 +6,7 @@ import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, UL } from '../styles/TodoStyle'
 import useError from '../Hooks/useError'
+import localToken from '../api/LocalToken'
 
 export type onAddFunction = (todo: string) => void
 export type OnTodoFunction = (todoItem: TodoType) => void
@@ -16,7 +17,7 @@ export interface TodoType {
   userId: number
 }
 
-const accessToken = localStorage.getItem('access_token')
+const accessToken = localToken.get()
 
 export default function Todo() {
   const [todos, setTodos] = useState<TodoType[]>([])
