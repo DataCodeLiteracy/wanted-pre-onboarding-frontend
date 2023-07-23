@@ -1,15 +1,26 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { REQUEST_URL } from './requestUrl'
 
 class APIClient {
-  api: AxiosInstance
+  #api: AxiosInstance
+  headers: Record<string, string>
 
-  constructor(baseURL: string, config?: AxiosRequestConfig) {
-    this.api = axios.create({ baseURL, ...config })
+  constructor(
+    baseURL: string,
+    accessToken: string,
+    config?: AxiosRequestConfig
+  ) {
+    this.#api = axios.create({ baseURL, ...config })
+    this.headers = {
+      Authorization: `Bearer ${accessToken}`
+    }
+
+    this.#api.defaults.headers.common = this.headers
   }
 
-  get(url: string, headers: Record<string, string>) {
-    return this.api
-      .get(url, headers)
+  get(endpoint: string, headers: Record<string, string>) {
+    return this.#api
+      .get(REQUEST_URL + endpoint, { ...this.headers, ...headers })
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
@@ -17,12 +28,12 @@ class APIClient {
   }
 
   post(
-    url: string,
+    endpoint: string,
     body: Record<string, string>,
     headers: Record<string, string>
   ) {
-    return this.api
-      .post(url, body, headers)
+    return this.#api
+      .post(REQUEST_URL + endpoint, body, { ...this.headers, ...headers })
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
@@ -30,21 +41,21 @@ class APIClient {
   }
 
   put(
-    url: string,
+    endpoint: string,
     body: Record<string, string | boolean>,
     headers: Record<string, string>
   ) {
-    return this.api
-      .put(url, body, headers)
+    return this.#api
+      .put(REQUEST_URL + endpoint, body, headers)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err)
       })
   }
 
-  delete(url: string, headers: Record<string, string>) {
-    return this.api
-      .delete(url, headers)
+  delete(endpoint: string, headers: Record<string, string>) {
+    return this.#api
+      .delete(REQUEST_URL + endpoint, { ...this.headers, ...headers })
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err)
