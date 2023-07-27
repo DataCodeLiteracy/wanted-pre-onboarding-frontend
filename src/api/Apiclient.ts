@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { REQUEST_URL } from './requestUrl'
-// import localToken from './LocalToken'
 
 class APIClient {
   #api: AxiosInstance
