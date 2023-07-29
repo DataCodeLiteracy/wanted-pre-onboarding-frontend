@@ -49,7 +49,7 @@ class APIClient {
       .put(REQUEST_URL + endpoint, body, headers)
       .then((res) => res.data)
       .catch((err) => {
-        throw new Error(err)
+        throw new Error(err.message)
       })
   }
 
@@ -58,7 +58,7 @@ class APIClient {
       .delete(REQUEST_URL + endpoint, { ...this.headers, ...headers })
       .then((res) => res.data)
       .catch((err) => {
-        throw new Error(err)
+        throw new Error(err.message)
       })
   }
 }

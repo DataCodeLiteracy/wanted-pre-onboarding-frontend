@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { TodoButton, Input, TodoInputMain, Message } from '../styles/TodoStyle'
 import { onAddFunction } from '../pages/Todo'
+import { UNKNOWN_ERROR } from '../utils/unknownError'
 
 interface OnAddProps {
   onAdd: onAddFunction
@@ -17,7 +18,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
       setValue('')
       setIsValidInput(true)
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
 
@@ -26,7 +27,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
       setValue(e.target.value)
       setIsValidInput(false)
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
 
