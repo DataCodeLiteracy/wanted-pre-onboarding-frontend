@@ -1,24 +1,22 @@
 import { useState } from 'react'
 import { AxiosError } from 'axios'
+import { UNKNOWN_ERROR } from '../utils/unknownError'
 
 const useError = () => {
   const [error, setError] = useState<Error | AxiosError | null>(null)
-
-  const handleError = (error: Error | AxiosError) => {
-    setError(error)
-  }
 
   const showError = (error) => {
     if (error) {
       if (error instanceof AxiosError) {
         window.alert(error.response?.data.message)
       } else {
-        console.error(error.message || '알 수 없는 에러가 발생 했습니다')
+        window.alert(error.message || UNKNOWN_ERROR)
       }
     }
+    setError(error)
   }
 
-  return { error, handleError, showError }
+  return { error, showError }
 }
 
 export default useError

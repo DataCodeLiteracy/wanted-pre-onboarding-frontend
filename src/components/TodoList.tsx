@@ -7,6 +7,7 @@ import {
 import { FiEdit } from 'react-icons/fi'
 import { LI, TodoListButton, Label } from '../styles/TodoStyle'
 import { TodoType, OnTodoFunction } from '../pages/Todo'
+import { UNKNOWN_ERROR } from '../utils/unknownError'
 
 interface TodoListProps {
   todoItem: TodoType
@@ -30,10 +31,10 @@ export default function TodoList({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      const isCompleted = e.target.checked ? true : false
+      const isCompleted = !!e.target.checked
       onCheck({ ...todoItem, isCompleted })
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
 
@@ -41,7 +42,7 @@ export default function TodoList({
     try {
       onDelete(todoItem)
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
 
@@ -50,7 +51,7 @@ export default function TodoList({
       setIsEditing(true)
       setEditValue(todo)
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
 
@@ -58,7 +59,7 @@ export default function TodoList({
     try {
       setEditValue(e.target.value)
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -68,7 +69,7 @@ export default function TodoList({
       setIsEditing(false)
       setEditValue('')
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -76,7 +77,7 @@ export default function TodoList({
       e.preventDefault()
       setIsEditing(false)
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
 

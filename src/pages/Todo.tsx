@@ -21,7 +21,7 @@ const accessToken = localToken.get()
 
 export default function Todo() {
   const [todos, setTodos] = useState<TodoType[]>([])
-  const { showError, handleError } = useError()
+  const { showError } = useError()
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -37,7 +37,6 @@ export default function Todo() {
       const createdTodo = await createTodo(accessToken, todo)
       setTodos([...todos, createdTodo])
     } catch (error) {
-      handleError(error)
       showError(error)
     }
   }
@@ -47,7 +46,6 @@ export default function Todo() {
       deleteTodo(accessToken, todoItem)
       setTodos(todos.filter((item) => item.id !== todoItem.id))
     } catch (error) {
-      handleError(error)
       showError(error)
     }
   }
@@ -57,7 +55,6 @@ export default function Todo() {
       updateTodo(accessToken, todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
-      handleError(error)
       showError(error)
     }
   }
@@ -71,7 +68,6 @@ export default function Todo() {
         )
       )
     } catch (error) {
-      handleError(error)
       showError(error)
     }
   }
@@ -79,17 +75,6 @@ export default function Todo() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleError: OnErrorEventHandler = (
-      eventOrMessage: string | Event | ErrorEvent
-    ) => {
-      if (eventOrMessage instanceof Event) {
-        eventOrMessage.preventDefault()
-        eventOrMessage.stopPropagation()
-      }
-    }
-
-    window.onerror = handleError
-
     if (!accessToken) {
       window.location.href = '/signin'
       return

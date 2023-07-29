@@ -1,13 +1,15 @@
-import { AxiosError } from 'axios'
 import { useContext } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import AuthApi from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
 import { SignWrapper } from '../styles/SignStyle'
+import useError from '../Hooks/useError'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
+
+  const { showError } = useError()
 
   if (!authContext) {
     return null
@@ -31,13 +33,7 @@ export default function Signup() {
 
       navigate('/signin')
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 400) {
-          window.alert(error.response.data.message)
-        }
-      } else {
-        console.error(error.message || '알 수 없는 에러가 발생 했습니다')
-      }
+      showError(error)
     }
   }
 

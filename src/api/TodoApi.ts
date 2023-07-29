@@ -8,7 +8,7 @@ const api = new APIClient(REQUEST_URL, localToken.get())
 export const createTodo = async (accessToken: string | null, todo: string) => {
   return await api.post(
     '/todos',
-    { todo: todo },
+    { todo },
     {
       'Content-Type': 'application/json'
     }

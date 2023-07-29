@@ -2,6 +2,7 @@ import { NavigateFunction } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 import localToken from '../api/LocalToken'
+import { UNKNOWN_ERROR } from '../utils/unknownError'
 
 export default function AppHeader({
   navigate,
@@ -21,7 +22,7 @@ export default function AppHeader({
       window.alert('로그아웃 되었습니다.')
       navigate('/')
     } catch (error) {
-      console.error(error.message || '알 수 없는 에러가 발생했습니다.')
+      window.alert(error.message || UNKNOWN_ERROR)
     }
   }
 
