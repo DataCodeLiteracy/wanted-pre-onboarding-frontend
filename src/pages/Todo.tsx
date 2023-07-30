@@ -43,7 +43,7 @@ export default function Todo() {
 
   const handleDelete = (todoItem: iTodo) => {
     try {
-      deleteTodo(todoItem)
+      deleteTodo(todoItem.id)
       setTodos(todos.filter((item) => item.id !== todoItem.id))
     } catch (error) {
       showError(error)
@@ -92,7 +92,7 @@ export default function Todo() {
       <TodoMain>
         <TodoTitle>TODO LIST</TodoTitle>
         <TodoInput onAdd={handleAdd} />
-        {todos && (
+        {todos?.length > 0 && (
           <UL className="todos">
             {todos.map((item) => (
               <TodoList

@@ -20,6 +20,6 @@ export const updateTodo = async (checked: iTodo) => {
   })
 }
 
-export const deleteTodo = async (deleted: iTodo) => {
-  return await api.delete(`/todos/${deleted.id}`)
+export const deleteTodo = async (id: number) => {
+  return await api.delete(`/todos/${id}`)
 }
