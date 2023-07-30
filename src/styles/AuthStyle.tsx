@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SignWrapper = styled.section`
+export const AuthWrapper = styled.section`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ export const SignWrapper = styled.section`
   border-radius: 5px;
 `
 
-export const SignMain = styled.section`
+export const AuthMain = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,13 +27,13 @@ export const SignMain = styled.section`
   border: 1px solid rgba(248, 241, 246, 0.2);
 `
 
-export const SignTitle = styled.h1`
+export const AuthH1 = styled.h1`
   font-size: 1rem;
   text-align: center;
   margin-bottom: 100px;
 `
 
-export const SignForm = styled.form`
+export const AuthForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;

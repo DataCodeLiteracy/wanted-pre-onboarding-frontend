@@ -6,11 +6,11 @@ import {
 } from 'react-icons/md'
 import { FiEdit } from 'react-icons/fi'
 import { LI, TodoListButton, Label } from '../styles/TodoStyle'
-import { TodoType, OnTodoFunction } from '../pages/Todo'
+import { iTodo, OnTodoFunction } from '../pages/Todo'
 import { UNKNOWN_ERROR } from '../utils/unknownError'
 
 interface TodoListProps {
-  todoItem: TodoType
+  todoItem: iTodo
   onEdit: OnTodoFunction
   onCheck: OnTodoFunction
   onDelete: OnTodoFunction

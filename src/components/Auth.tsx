@@ -1,14 +1,14 @@
 import { useContext } from 'react'
-import { SignForm, SignTitle, SignMain, ValidLabel } from '../styles/SignStyle'
+import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 
 interface AuthProps {
-  title: string
-  signBtn: string
-  handleSign: (e: React.FormEvent<HTMLFormElement>) => void
+  AuthTitle: string
+  AuthButtonText: string
+  handleAuth: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const Auth = ({ title, signBtn, handleSign }: AuthProps) => {
+const Auth = ({ AuthTitle, AuthButtonText, handleAuth }: AuthProps) => {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
   if (!authContext) {
@@ -26,9 +26,9 @@ const Auth = ({ title, signBtn, handleSign }: AuthProps) => {
   } = authContext
 
   return (
-    <SignMain>
-      <SignTitle>{title}</SignTitle>
-      <SignForm onSubmit={handleSign}>
+    <AuthMain>
+      <AuthH1>{AuthTitle}</AuthH1>
+      <AuthForm onSubmit={handleAuth}>
         <div>
           <label htmlFor="email">이메일</label>
           <input
@@ -65,10 +65,10 @@ const Auth = ({ title, signBtn, handleSign }: AuthProps) => {
           type="submit"
           disabled={btnDisabled}
         >
-          {signBtn}
+          {AuthButtonText}
         </button>
-      </SignForm>
-    </SignMain>
+      </AuthForm>
+    </AuthMain>
   )
 }
 

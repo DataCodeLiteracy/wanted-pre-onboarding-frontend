@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SignMain } from './SignStyle'
+import { AuthMain } from './AuthStyle'
 import { Button } from './HeaderStyle'
 
 export const TodoWrapper = styled.section`
@@ -23,7 +23,7 @@ export const TodoTitle = styled.h1`
   margin: 10px 0 20px 0;
 `
 
-export const TodoMain = styled(SignMain)`
+export const TodoMain = styled(AuthMain)`
   margin-bottom: 15px;
   width: 95%;
 `
