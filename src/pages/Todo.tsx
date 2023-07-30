@@ -110,7 +110,7 @@ export default function Todo() {
   )
 }
 
-async function readTodo() {
+async function readTodo(): Promise<iTodo[]> {
   const res = await getTodos()
   return res
 }
