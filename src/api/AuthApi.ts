@@ -8,18 +8,10 @@ interface AuthApiProps {
 }
 
 const AuthApi = async ({ endpoint, email, password }: AuthApiProps) => {
-  const res = await axios.post(
-    REQUEST_URL + endpoint,
-    {
-      email,
-      password
-    },
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-  )
+  const res = await axios.post(REQUEST_URL + endpoint, {
+    email,
+    password
+  })
 
   return res
 }
