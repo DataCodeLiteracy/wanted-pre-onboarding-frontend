@@ -9,8 +9,8 @@ import useError from '../Hooks/useError'
 import localToken from '../api/LocalToken'
 
 export type onAddFunction = (todo: string) => void
-export type OnTodoFunction = (todoItem: TodoType) => void
-export interface TodoType {
+export type OnTodoFunction = (todoItem: iTodo) => void
+export interface iTodo {
   id: number
   todo: string
   isCompleted: boolean
@@ -18,7 +18,7 @@ export interface TodoType {
 }
 
 export default function Todo() {
-  const [todos, setTodos] = useState<TodoType[]>([])
+  const [todos, setTodos] = useState<iTodo[]>([])
   const { showError } = useError()
 
   const accessToken = localToken.get()
@@ -41,7 +41,7 @@ export default function Todo() {
     }
   }
 
-  const handleDelete = (todoItem: TodoType) => {
+  const handleDelete = (todoItem: iTodo) => {
     try {
       deleteTodo(todoItem)
       setTodos(todos.filter((item) => item.id !== todoItem.id))
@@ -50,7 +50,7 @@ export default function Todo() {
     }
   }
 
-  const handleCheck = (todoItem: TodoType) => {
+  const handleCheck = (todoItem: iTodo) => {
     try {
       updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
@@ -59,7 +59,7 @@ export default function Todo() {
     }
   }
 
-  const handleEdit = (todoItem: TodoType) => {
+  const handleEdit = (todoItem: iTodo) => {
     try {
       updateTodo(todoItem)
       setTodos(

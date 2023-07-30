@@ -3,7 +3,7 @@ import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import AuthApi from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
-import { SignWrapper } from '../styles/SignStyle'
+import { AuthWrapper } from '../styles/AuthStyle'
 import localToken from '../api/LocalToken'
 import useError from '../Hooks/useError'
 
@@ -47,14 +47,18 @@ export default function Signup() {
   }
 
   return (
-    <SignWrapper>
+    <AuthWrapper>
       <AppHeader
         navigate={navigate}
         isHomeButton={true}
         isSignupButton={true}
         isLogin={true}
       />
-      <Auth title={'로그인'} signBtn={'로그인'} handleSign={handleSignin} />
-    </SignWrapper>
+      <Auth
+        AuthTitle="로그인"
+        AuthButtonText="로그인"
+        handleAuth={handleSignin}
+      />
+    </AuthWrapper>
   )
 }

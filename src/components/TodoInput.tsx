@@ -9,14 +9,14 @@ interface OnAddProps {
 
 export default function TodoInput({ onAdd }: OnAddProps) {
   const [value, setValue] = useState('')
-  const [isValidInput, setIsValidInput] = useState(false)
+  const [isInputEmpty, setIsInputEmpty] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
       onAdd(value)
       setValue('')
-      setIsValidInput(true)
+      setIsInputEmpty(true)
     } catch (error) {
       window.alert(error.message || UNKNOWN_ERROR)
     }
@@ -25,7 +25,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setValue(e.target.value)
-      setIsValidInput(false)
+      setIsInputEmpty(false)
     } catch (error) {
       window.alert(error.message || UNKNOWN_ERROR)
     }
@@ -43,7 +43,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
         />
         <TodoButton data-testid="new-todo-add-button">추가</TodoButton>
       </div>
-      {isValidInput && (
+      {isInputEmpty && (
         <Message>내용을 입력한 후 추가 버튼이나 Enter를 눌러주세요.</Message>
       )}
     </TodoInputMain>
