@@ -17,11 +17,11 @@ export interface TodoType {
   userId: number
 }
 
-const accessToken = localToken.get()
-
 export default function Todo() {
   const [todos, setTodos] = useState<TodoType[]>([])
   const { showError } = useError()
+
+  const accessToken = localToken.get()
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -34,7 +34,7 @@ export default function Todo() {
 
   const handleAdd = async (todo: string) => {
     try {
-      const createdTodo = await createTodo(accessToken, todo)
+      const createdTodo = await createTodo(todo)
       setTodos([...todos, createdTodo])
     } catch (error) {
       showError(error)
@@ -43,7 +43,7 @@ export default function Todo() {
 
   const handleDelete = (todoItem: TodoType) => {
     try {
-      deleteTodo(accessToken, todoItem)
+      deleteTodo(todoItem)
       setTodos(todos.filter((item) => item.id !== todoItem.id))
     } catch (error) {
       showError(error)
@@ -52,7 +52,7 @@ export default function Todo() {
 
   const handleCheck = (todoItem: TodoType) => {
     try {
-      updateTodo(accessToken, todoItem)
+      updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
       showError(error)
@@ -61,7 +61,7 @@ export default function Todo() {
 
   const handleEdit = (todoItem: TodoType) => {
     try {
-      updateTodo(accessToken, todoItem)
+      updateTodo(todoItem)
       setTodos(
         todos.map((item) =>
           item.id === todoItem.id ? { ...item, todo: todoItem.todo } : item
@@ -111,6 +111,6 @@ export default function Todo() {
 }
 
 async function readTodo() {
-  const res = await getTodos(accessToken)
+  const res = await getTodos()
   return res
 }
