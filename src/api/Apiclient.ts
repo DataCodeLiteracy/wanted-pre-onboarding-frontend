@@ -12,50 +12,43 @@ class APIClient {
   ) {
     this.#api = axios.create({ baseURL, ...config })
     this.headers = {
-      Authorization: `Bearer ${localToken}`
+      Authorization: `Bearer ${localToken}`,
+      'Content-Type': 'application/json'
     }
 
     this.#api.defaults.headers.common = this.headers
   }
 
-  get(endpoint: string, headers: Record<string, string>) {
+  get(endpoint: string) {
     return this.#api
-      .get(REQUEST_URL + endpoint, { ...this.headers, ...headers })
+      .get(REQUEST_URL + endpoint)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
       })
   }
 
-  post(
-    endpoint: string,
-    body: Record<string, string>,
-    headers: Record<string, string>
-  ) {
+  post(endpoint: string, body: Record<string, string>) {
     return this.#api
-      .post(REQUEST_URL + endpoint, body, { ...this.headers, ...headers })
+      .post(REQUEST_URL + endpoint, body)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
       })
   }
 
-  put(
-    endpoint: string,
-    body: Record<string, string | boolean>,
-    headers: Record<string, string>
-  ) {
+  put(endpoint: string, body: Record<string, string | boolean>) {
     return this.#api
-      .put(REQUEST_URL + endpoint, body, headers)
+      .put(REQUEST_URL + endpoint, body)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
       })
   }
 
-  delete(endpoint: string, headers: Record<string, string>) {
+  delete(endpoint: string) {
     return this.#api
-      .delete(REQUEST_URL + endpoint, { ...this.headers, ...headers })
+      .delete(REQUEST_URL + endpoint)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
