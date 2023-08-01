@@ -1,7 +1,11 @@
-import { useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
-import { AuthContext, AuthContextProps } from '../context/AuthContext'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { setAccessToken, setEmail, setPassword } from '../reducer/authSlice'
+import { useNavigate } from 'react-router-dom'
+import { RootState } from '../reducer/reducers'
+import { AppDispatch } from '../app/store'
+import localToken from '../api/LocalToken'
 interface AuthProps {
   AuthTitle: string
   AuthButtonText: string
@@ -9,21 +13,37 @@ interface AuthProps {
 }
 
 const Auth = ({ AuthTitle, AuthButtonText, handleAuth }: AuthProps) => {
-  const authContext = useContext<AuthContextProps | null>(AuthContext)
+  const { email, password, accessToken } = useSelector(
+    (state: RootState) => state.auth
+  )
+  const [btnDisabled, setBtnDisabled] = useState(false)
+  const navigate = useNavigate()
+  const dispatch: AppDispatch = useDispatch()
 
-  if (!authContext) {
-    return null
+  const isValidEmail = email.indexOf('@') !== -1
+  const isValidPassword = password.length >= 8
+
+  useEffect(() => {
+    setBtnDisabled(!isValidEmail || !isValidPassword)
+  }, [isValidEmail, isValidPassword])
+
+  useEffect(() => {
+    dispatch(setAccessToken(localToken.get()))
+
+    if (accessToken) {
+      navigate('/todo')
+    }
+  }, [dispatch, accessToken, navigate])
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    dispatch(setEmail(e.target.value))
   }
 
-  const {
-    email,
-    password,
-    btnDisabled,
-    isValidEmail,
-    isValidPassword,
-    handleEmailChange,
-    handlePasswordChange
-  } = authContext
+  const handlePasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    dispatch(setPassword(e.target.value))
+  }
 
   return (
     <AuthMain>

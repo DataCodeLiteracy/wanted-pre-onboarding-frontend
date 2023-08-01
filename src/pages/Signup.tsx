@@ -1,25 +1,18 @@
-import { useContext } from 'react'
-import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import AuthApi from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import useError from '../Hooks/useError'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { RootState } from '../reducer/reducers'
 
 export default function Signup() {
-  const authContext = useContext<AuthContextProps | null>(AuthContext)
+  const { email, password } = useSelector((state: RootState) => state.auth)
+
+  const navigate = useNavigate()
 
   const { showError } = useError()
-
-  if (!authContext) {
-    return null
-  }
-
-  const { email, password, accessToken, navigate } = authContext
-
-  if (accessToken) {
-    navigate('/todo')
-  }
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
