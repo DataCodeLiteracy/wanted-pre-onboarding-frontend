@@ -13,7 +13,7 @@ interface TodoListProps {
   todoItem: iTodo
   onEdit: OnTodoFunction
   onCheck: OnTodoFunction
-  onDelete: OnTodoFunction
+  onDelete: (id: number) => void
 }
 
 export default function TodoList({
@@ -22,7 +22,7 @@ export default function TodoList({
   onCheck,
   onDelete
 }: TodoListProps) {
-  const { todo, isCompleted } = todoItem
+  const { id, todo, isCompleted } = todoItem
 
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
@@ -40,7 +40,7 @@ export default function TodoList({
 
   const handleDelete = () => {
     try {
-      onDelete(todoItem)
+      onDelete(id)
     } catch (error) {
       window.alert(error.message || UNKNOWN_ERROR)
     }

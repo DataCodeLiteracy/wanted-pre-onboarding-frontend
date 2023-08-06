@@ -41,10 +41,10 @@ export default function Todo() {
     }
   }
 
-  const handleDelete = (todoItem: iTodo) => {
+  const handleDelete = (id: number) => {
     try {
-      deleteTodo(todoItem.id)
-      setTodos(todos.filter((item) => item.id !== todoItem.id))
+      deleteTodo(id)
+      setTodos(todos.filter((item) => item.id !== id))
     } catch (error) {
       showError(error)
     }
