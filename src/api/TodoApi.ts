@@ -1,4 +1,4 @@
-import { iTodo } from './../pages/Todo'
+import { ITodo } from './../pages/Todo'
 import { REQUEST_URL } from './requestUrl'
 import APIClient from './Apiclient'
 import localToken from './LocalToken'
@@ -13,7 +13,7 @@ export const getTodos = async () => {
   return await api.get('/todos')
 }
 
-export const updateTodo = async (checked: iTodo) => {
+export const updateTodo = async (checked: ITodo) => {
   return await api.put(`/todos/${checked.id}`, {
     todo: checked.todo,
     isCompleted: checked.isCompleted

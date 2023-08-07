@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AxiosError } from 'axios'
-import { UNKNOWN_ERROR } from '../utils/unknownError'
+import { UNKNOWN_ERROR } from '../utils/message'
 
 const useError = () => {
   const [error, setError] = useState<Error | AxiosError | null>(null)

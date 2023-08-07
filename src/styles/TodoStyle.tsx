@@ -58,7 +58,7 @@ export const ListInput = styled(Input)`
   width: 150px;
 `
 
-export const UL = styled.ul`
+export const Ul = styled.ul`
   width: 80%;
   height: 100%;
   display: flex;
@@ -68,7 +68,7 @@ export const UL = styled.ul`
   padding: 20px;
 `
 
-export const LI = styled.li`
+export const Li = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;

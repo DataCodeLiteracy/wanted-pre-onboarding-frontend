@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TodoButton, Input, TodoInputMain, Message } from '../styles/TodoStyle'
 import { onAddFunction } from '../pages/Todo'
-import { UNKNOWN_ERROR } from '../utils/unknownError'
+import { UNKNOWN_ERROR } from '../utils/message'
 
 interface OnAddProps {
   onAdd: onAddFunction

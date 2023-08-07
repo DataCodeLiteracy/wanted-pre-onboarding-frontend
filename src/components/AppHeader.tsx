@@ -2,7 +2,7 @@ import { NavigateFunction } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 import localToken from '../api/LocalToken'
-import { UNKNOWN_ERROR } from '../utils/unknownError'
+import { UNKNOWN_ERROR } from '../utils/message'
 
 export default function AppHeader({
   navigate,

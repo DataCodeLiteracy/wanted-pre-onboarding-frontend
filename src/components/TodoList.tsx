@@ -5,12 +5,12 @@ import {
   MdFileDownloadDone
 } from 'react-icons/md'
 import { FiEdit } from 'react-icons/fi'
-import { LI, TodoListButton, Label } from '../styles/TodoStyle'
-import { iTodo, OnTodoFunction } from '../pages/Todo'
-import { UNKNOWN_ERROR } from '../utils/unknownError'
+import { Li, TodoListButton, Label } from '../styles/TodoStyle'
+import { ITodo, OnTodoFunction } from '../pages/Todo'
+import { UNKNOWN_ERROR } from '../utils/message'
 
 interface TodoListProps {
-  todoItem: iTodo
+  todoItem: ITodo
   onEdit: OnTodoFunction
   onCheck: OnTodoFunction
   onDelete: (id: number) => void
@@ -88,7 +88,7 @@ export default function TodoList({
   }, [isEditing])
 
   return (
-    <LI>
+    <Li>
       <input
         type="checkbox"
         id={`checkbox-${todoItem.id}`}
@@ -128,6 +128,6 @@ export default function TodoList({
           </TodoListButton>
         </>
       )}
-    </LI>
+    </Li>
   )
 }

@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
+import { VALID_MESSAGE_EMAIL, VALID_MESSAGE_PASSWORD } from '../utils/message'
 
 interface AuthProps {
   AuthTitle: string
@@ -40,7 +41,7 @@ const Auth = ({ AuthTitle, AuthButtonText, handleAuth }: AuthProps) => {
             onChange={handleEmailChange}
           />
           {!isValidEmail && (
-            <ValidLabel htmlFor="email">이메일에 @ 기호가 없습니다.</ValidLabel>
+            <ValidLabel htmlFor="email">{VALID_MESSAGE_EMAIL}</ValidLabel>
           )}
         </div>
         <div>
@@ -54,9 +55,7 @@ const Auth = ({ AuthTitle, AuthButtonText, handleAuth }: AuthProps) => {
             onChange={handlePasswordChange}
           />
           {!isValidPassword && (
-            <ValidLabel htmlFor="email">
-              비밀번호는 8자 이상이여야 합니다.
-            </ValidLabel>
+            <ValidLabel htmlFor="email">{VALID_MESSAGE_PASSWORD}</ValidLabel>
           )}
         </div>
 
