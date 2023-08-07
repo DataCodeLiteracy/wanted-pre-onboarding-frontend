@@ -1,18 +1,12 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 import localToken from '../api/LocalToken'
 import useError from '../Hooks/useError'
 
-export default function AppHeader({
-  isHomeButton,
-  isSignupButton,
-  isLogin
-}: {
-  isHomeButton: boolean
-  isSignupButton: boolean
-  isLogin: boolean
-}) {
+export default function AppHeader() {
+  const [currentPath, setCurrentPath] = useState('')
   const { alertError } = useError()
 
   const navigate = useNavigate()
@@ -28,41 +22,41 @@ export default function AppHeader({
     }
   }
 
+  useEffect(() => {
+    setCurrentPath(window.location.pathname)
+  }, [currentPath])
+
+  const buttons = [
+    {
+      path: '/',
+      text: <AiFillHome />,
+      showOnPaths: ['/signin', '/signup', '/todo']
+    },
+    { path: '/signup', text: '회원가입', showOnPaths: ['/', '/signin'] },
+    { path: '/signin', text: '로그인', showOnPaths: ['/', '/signup'] },
+    { path: '', text: '로그아웃', showOnPaths: ['/', '/todo'] }
+  ]
+
   return (
     <Nav>
       <h1>Wanted-Pre-Onboarding</h1>
       <FlexDiv>
-        {isHomeButton && (
-          <Button
-            onClick={() => {
-              navigate('/')
-            }}
-          >
-            <AiFillHome />
-          </Button>
-        )}
-        {isSignupButton && (
-          <Button
-            onClick={() => {
-              navigate('/signup')
-            }}
-          >
-            회원가입
-          </Button>
-        )}
-        {isLogin && (
-          <Button
-            onClick={() => {
-              navigate('/signin')
-            }}
-          >
-            로그인
-          </Button>
-        )}
-        {!isLogin && (
-          <Button data-testid="logout-button" onClick={handleLogout}>
-            로그아웃
-          </Button>
+        {buttons.map(
+          (button) =>
+            button.showOnPaths.includes(currentPath) && (
+              <Button
+                key={button.path}
+                onClick={() => {
+                  if (button.text === '로그아웃') {
+                    handleLogout()
+                  } else {
+                    navigate(button.path)
+                  }
+                }}
+              >
+                {button.text}
+              </Button>
+            )
         )}
       </FlexDiv>
     </Nav>

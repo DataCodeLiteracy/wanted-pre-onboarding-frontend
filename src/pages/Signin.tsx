@@ -53,7 +53,7 @@ export default function Signup() {
 
   return (
     <AuthWrapper>
-      <AppHeader isHomeButton={true} isSignupButton={true} isLogin={true} />
+      <AppHeader />
       <Auth
         AuthTitle="로그인"
         AuthButtonText="로그인"

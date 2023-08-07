@@ -14,6 +14,8 @@ export default function Signup() {
 
   const navigate = useNavigate()
 
+  const { email, password, accessToken } = authContext
+
   useEffect(() => {
     if (accessToken) {
       navigate('/todo')
@@ -23,8 +25,6 @@ export default function Signup() {
   if (!authContext) {
     return null
   }
-
-  const { email, password, accessToken } = authContext
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -44,7 +44,7 @@ export default function Signup() {
 
   return (
     <AuthWrapper>
-      <AppHeader isHomeButton={true} isSignupButton={false} isLogin={true} />
+      <AppHeader />
       <Auth
         AuthTitle="회원가입"
         AuthButtonText="가입하기"

@@ -4,7 +4,7 @@ import { Title, WhiteShadowTitle, Wrapper, Main } from '../styles/HomeStyle'
 export default function Home() {
   return (
     <Wrapper>
-      <AppHeader isHomeButton={false} isSignupButton={true} isLogin={true} />
+      <AppHeader />
       <Main>
         <Title>FRONTEND</Title>
         <WhiteShadowTitle>INTERNSHIP</WhiteShadowTitle>

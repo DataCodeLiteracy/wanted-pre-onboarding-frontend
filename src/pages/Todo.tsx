@@ -80,7 +80,7 @@ export default function Todo() {
 
   return (
     <TodoWrapper>
-      <AppHeader isLogin={false} isHomeButton={true} isSignupButton={false} />
+      <AppHeader />
       <TodoMain>
         <TodoTitle>TODO LIST</TodoTitle>
         <TodoInput onAdd={handleAdd} />
