@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import TodoInput from '../components/TodoInput'
 import TodoList from '../components/TodoList'
-import { useNavigate } from 'react-router-dom'
 import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
@@ -72,8 +71,6 @@ export default function Todo() {
     }
   }
 
-  const navigate = useNavigate()
-
   useEffect(() => {
     if (!accessToken) {
       window.location.href = '/signin'
@@ -83,12 +80,7 @@ export default function Todo() {
 
   return (
     <TodoWrapper>
-      <AppHeader
-        navigate={navigate}
-        isLogin={false}
-        isHomeButton={true}
-        isSignupButton={false}
-      />
+      <AppHeader isLogin={false} isHomeButton={true} isSignupButton={false} />
       <TodoMain>
         <TodoTitle>TODO LIST</TodoTitle>
         <TodoInput onAdd={handleAdd} />

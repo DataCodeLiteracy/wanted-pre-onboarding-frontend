@@ -1,21 +1,21 @@
-import { NavigateFunction } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 import localToken from '../api/LocalToken'
 import useError from '../Hooks/useError'
 
 export default function AppHeader({
-  navigate,
   isHomeButton,
   isSignupButton,
   isLogin
 }: {
-  navigate: NavigateFunction
   isHomeButton: boolean
   isSignupButton: boolean
   isLogin: boolean
 }) {
   const { alertError } = useError()
+
+  const navigate = useNavigate()
 
   const handleLogout = () => {
     try {

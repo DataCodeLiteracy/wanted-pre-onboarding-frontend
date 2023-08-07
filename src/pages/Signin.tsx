@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import AuthApi from '../api/AuthApi'
@@ -6,20 +6,25 @@ import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import localToken from '../api/LocalToken'
 import useError from '../Hooks/useError'
+import { useNavigate } from 'react-router-dom'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
   const { showError } = useError()
 
+  const navigate = useNavigate()
+
+  const { email, password, accessToken } = authContext
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate('/todo')
+    }
+  }, [])
+
   if (!authContext) {
     return null
-  }
-
-  const { email, password, accessToken, navigate } = authContext
-
-  if (accessToken) {
-    navigate('/todo')
   }
 
   const saveToken = (token: string) => {
@@ -48,12 +53,7 @@ export default function Signup() {
 
   return (
     <AuthWrapper>
-      <AppHeader
-        navigate={navigate}
-        isHomeButton={true}
-        isSignupButton={true}
-        isLogin={true}
-      />
+      <AppHeader isHomeButton={true} isSignupButton={true} isLogin={true} />
       <Auth
         AuthTitle="로그인"
         AuthButtonText="로그인"

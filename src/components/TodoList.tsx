@@ -63,6 +63,7 @@ export default function TodoList({
       alertError(error.message)
     }
   }
+
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
@@ -73,6 +74,7 @@ export default function TodoList({
       alertError(error.message)
     }
   }
+
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault()

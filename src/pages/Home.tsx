@@ -1,18 +1,10 @@
 import AppHeader from '../components/AppHeader'
 import { Title, WhiteShadowTitle, Wrapper, Main } from '../styles/HomeStyle'
-import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
-  const navigate = useNavigate()
-
   return (
     <Wrapper>
-      <AppHeader
-        navigate={navigate}
-        isHomeButton={false}
-        isSignupButton={true}
-        isLogin={true}
-      />
+      <AppHeader isHomeButton={false} isSignupButton={true} isLogin={true} />
       <Main>
         <Title>FRONTEND</Title>
         <WhiteShadowTitle>INTERNSHIP</WhiteShadowTitle>

@@ -1,25 +1,30 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import AuthApi from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import useError from '../Hooks/useError'
+import { useNavigate } from 'react-router-dom'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
   const { showError } = useError()
 
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate('/todo')
+    }
+  }, [])
+
   if (!authContext) {
     return null
   }
 
-  const { email, password, accessToken, navigate } = authContext
-
-  if (accessToken) {
-    navigate('/todo')
-  }
+  const { email, password, accessToken } = authContext
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -39,12 +44,7 @@ export default function Signup() {
 
   return (
     <AuthWrapper>
-      <AppHeader
-        navigate={navigate}
-        isHomeButton={true}
-        isSignupButton={false}
-        isLogin={true}
-      />
+      <AppHeader isHomeButton={true} isSignupButton={false} isLogin={true} />
       <Auth
         AuthTitle="회원가입"
         AuthButtonText="가입하기"

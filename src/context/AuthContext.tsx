@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useState, useEffect } from 'react'
-import { NavigateFunction, useNavigate } from 'react-router-dom'
 import localToken from '../api/LocalToken'
 
 export interface AuthContextProps {
@@ -9,7 +8,6 @@ export interface AuthContextProps {
   accessToken: string | null
   isValidEmail: boolean
   isValidPassword: boolean
-  navigate: NavigateFunction
   handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -20,7 +18,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [btnDisabled, setBtnDisabled] = useState(false)
-  const navigate = useNavigate()
 
   const accessToken = localToken.get()
 
@@ -30,12 +27,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setBtnDisabled(!isValidEmail || !isValidPassword)
   }, [isValidEmail, isValidPassword])
-
-  useEffect(() => {
-    if (accessToken) {
-      navigate('/todo')
-    }
-  }, [accessToken, navigate])
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.target.value)
@@ -54,7 +45,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     accessToken,
     isValidEmail,
     isValidPassword,
-    navigate,
     handleEmailChange,
     handlePasswordChange
   }
