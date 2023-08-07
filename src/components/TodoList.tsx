@@ -7,7 +7,7 @@ import {
 import { FiEdit } from 'react-icons/fi'
 import { Li, TodoListButton, Label } from '../styles/TodoStyle'
 import { ITodo, OnTodoFunction } from '../pages/Todo'
-import { UNKNOWN_ERROR } from '../utils/message'
+import useError from '../Hooks/useError'
 
 interface TodoListProps {
   todoItem: ITodo
@@ -26,6 +26,7 @@ export default function TodoList({
 
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
+  const { alertError } = useError()
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
@@ -34,7 +35,7 @@ export default function TodoList({
       const isCompleted = !!e.target.checked
       onCheck({ ...todoItem, isCompleted })
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
 
@@ -42,7 +43,7 @@ export default function TodoList({
     try {
       onDelete(id)
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
 
@@ -51,7 +52,7 @@ export default function TodoList({
       setIsEditing(true)
       setEditValue(todo)
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
 
@@ -59,7 +60,7 @@ export default function TodoList({
     try {
       setEditValue(e.target.value)
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,7 +70,7 @@ export default function TodoList({
       setIsEditing(false)
       setEditValue('')
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,7 +78,7 @@ export default function TodoList({
       e.preventDefault()
       setIsEditing(false)
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
 

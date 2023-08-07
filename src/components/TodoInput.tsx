@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TodoButton, Input, TodoInputMain, Message } from '../styles/TodoStyle'
 import { onAddFunction } from '../pages/Todo'
-import { UNKNOWN_ERROR } from '../utils/message'
+import useError from '../Hooks/useError'
 
 interface OnAddProps {
   onAdd: onAddFunction
@@ -11,6 +11,8 @@ export default function TodoInput({ onAdd }: OnAddProps) {
   const [value, setValue] = useState('')
   const [isInputEmpty, setIsInputEmpty] = useState(false)
 
+  const { alertError } = useError()
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
@@ -18,7 +20,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
       setValue('')
       setIsInputEmpty(true)
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
 
@@ -27,7 +29,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
       setValue(e.target.value)
       setIsInputEmpty(false)
     } catch (error) {
-      window.alert(error.message || UNKNOWN_ERROR)
+      alertError(error.message)
     }
   }
 
