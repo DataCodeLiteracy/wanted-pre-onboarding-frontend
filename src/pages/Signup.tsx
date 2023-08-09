@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
-import AuthApi from '../api/AuthApi'
+import { authUser } from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import useError from '../Hooks/useError'
@@ -29,10 +29,8 @@ export default function Signup() {
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const endpoint = '/auth/signup'
-
     try {
-      await AuthApi({ endpoint, email, password })
+      await authUser('/signup', { email, password })
 
       window.alert('회원가입이 완료되었습니다!')
 

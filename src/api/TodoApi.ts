@@ -3,23 +3,23 @@ import { REQUEST_URL } from './requestUrl'
 import APIClient from './Apiclient'
 import localToken from './LocalToken'
 
-const api = new APIClient(REQUEST_URL, localToken.get())
+const todoApi = new APIClient(REQUEST_URL + '/todos', localToken.get())
 
 export const createTodo = async (todo: string) => {
-  return await api.post('/todos', { todo })
+  return await todoApi.post('/', { todo })
 }
 
 export const getTodos = async () => {
-  return await api.get('/todos')
+  return await todoApi.get('/')
 }
 
 export const updateTodo = async (checked: ITodo) => {
-  return await api.put(`/todos/${checked.id}`, {
+  return await todoApi.put(`/${checked.id}`, {
     todo: checked.todo,
     isCompleted: checked.isCompleted
   })
 }
 
 export const deleteTodo = async (id: number) => {
-  return await api.delete(`/todos/${id}`)
+  return await todoApi.delete(`/${id}`)
 }

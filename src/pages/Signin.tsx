@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
-import AuthApi from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import localToken from '../api/LocalToken'
 import useError from '../Hooks/useError'
 import { useNavigate } from 'react-router-dom'
+import { authUser } from '../api/AuthApi'
 
-export default function Signup() {
+export default function Signin() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
   const { showError } = useError()
@@ -34,12 +34,10 @@ export default function Signup() {
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const endpoint = '/auth/signin'
-
     try {
-      const res = await AuthApi({ endpoint, email, password })
+      const res = await authUser('/signin', { email, password })
 
-      const { access_token } = res.data
+      const { access_token } = res
       if (access_token) {
         saveToken(access_token)
         navigate('/todo')

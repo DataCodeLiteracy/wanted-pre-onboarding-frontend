@@ -1,19 +1,19 @@
-import axios from 'axios'
 import { REQUEST_URL } from './requestUrl'
+import APIClient from './Apiclient'
+import localToken from './LocalToken'
 
-interface AuthApiProps {
-  endpoint: string
+interface AuthData {
   email: string
   password: string
 }
 
-const AuthApi = async ({ endpoint, email, password }: AuthApiProps) => {
-  const res = await axios.post(REQUEST_URL + endpoint, {
-    email,
-    password
+type AuthEndPoint = '/signup' | '/signin'
+
+const authApi = new APIClient(REQUEST_URL + '/auth', localToken.get())
+
+export const authUser = async (endpoint: AuthEndPoint, body: AuthData) => {
+  return await authApi.post(endpoint, {
+    email: body.email,
+    password: body.password
   })
-
-  return res
 }
-
-export default AuthApi

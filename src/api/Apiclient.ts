@@ -1,15 +1,16 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { REQUEST_URL } from './requestUrl'
 
 class APIClient {
   private readonly api: AxiosInstance
   headers: Record<string, string>
+  baseURL: string
 
   constructor(
     baseURL: string,
     localToken: string,
     config?: AxiosRequestConfig
   ) {
+    this.baseURL = baseURL
     this.api = axios.create({ baseURL, ...config })
     this.headers = {
       Authorization: `Bearer ${localToken}`,
@@ -21,7 +22,7 @@ class APIClient {
 
   get(endpoint: string) {
     return this.api
-      .get(REQUEST_URL + endpoint)
+      .get(this.baseURL + endpoint)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
@@ -30,7 +31,7 @@ class APIClient {
 
   post(endpoint: string, body: Record<string, string>) {
     return this.api
-      .post(REQUEST_URL + endpoint, body)
+      .post(this.baseURL + endpoint, body)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
@@ -39,7 +40,7 @@ class APIClient {
 
   put(endpoint: string, body: Record<string, string | boolean>) {
     return this.api
-      .put(REQUEST_URL + endpoint, body)
+      .put(this.baseURL + endpoint, body)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
@@ -48,7 +49,7 @@ class APIClient {
 
   delete(endpoint: string) {
     return this.api
-      .delete(REQUEST_URL + endpoint)
+      .delete(this.baseURL + endpoint)
       .then((res) => res.data)
       .catch((err) => {
         throw new Error(err.message)
