@@ -4,12 +4,12 @@ import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import { VALID_MESSAGE_EMAIL, VALID_MESSAGE_PASSWORD } from '../utils/message'
 
 interface AuthProps {
-  AuthTitle: string
-  AuthButtonText: string
+  title: string
+  buttonText: string
   handleAuth: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const Auth = ({ AuthTitle, AuthButtonText, handleAuth }: AuthProps) => {
+const Auth = ({ title, buttonText, handleAuth }: AuthProps) => {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
   if (!authContext) {
@@ -28,7 +28,7 @@ const Auth = ({ AuthTitle, AuthButtonText, handleAuth }: AuthProps) => {
 
   return (
     <AuthMain>
-      <AuthH1>{AuthTitle}</AuthH1>
+      <AuthH1>{title}</AuthH1>
       <AuthForm onSubmit={handleAuth}>
         <div>
           <label htmlFor="email">이메일</label>
@@ -64,7 +64,7 @@ const Auth = ({ AuthTitle, AuthButtonText, handleAuth }: AuthProps) => {
           type="submit"
           disabled={btnDisabled}
         >
-          {AuthButtonText}
+          {buttonText}
         </button>
       </AuthForm>
     </AuthMain>

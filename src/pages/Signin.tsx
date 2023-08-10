@@ -7,6 +7,7 @@ import localToken from '../api/LocalToken'
 import useError from '../Hooks/useError'
 import { useNavigate } from 'react-router-dom'
 import { authUser } from '../api/AuthApi'
+import { COMPLETED_SIGN_IN } from '../utils/message'
 
 export default function Signin() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -43,7 +44,7 @@ export default function Signin() {
         navigate('/todo')
       }
 
-      window.alert('로그인이 완료되었습니다!')
+      window.alert(COMPLETED_SIGN_IN)
     } catch (error) {
       showError(error)
     }
@@ -52,11 +53,7 @@ export default function Signin() {
   return (
     <AuthWrapper>
       <AppHeader />
-      <Auth
-        AuthTitle="로그인"
-        AuthButtonText="로그인"
-        handleAuth={handleSignin}
-      />
+      <Auth title="로그인" buttonText="로그인" handleAuth={handleSignin} />
     </AuthWrapper>
   )
 }

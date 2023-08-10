@@ -23,12 +23,10 @@ export default function Todo() {
   const accessToken = localToken.get()
 
   useEffect(() => {
-    const fetchTodos = async () => {
+    ;(async () => {
       const todos = await readTodo()
       setTodos(todos)
-    }
-
-    fetchTodos()
+    })()
   }, [])
 
   const handleAdd = async (todo: string) => {
@@ -61,11 +59,7 @@ export default function Todo() {
   const handleEdit = (todoItem: ITodo) => {
     try {
       updateTodo(todoItem)
-      setTodos(
-        todos.map((item) =>
-          item.id === todoItem.id ? { ...item, todo: todoItem.todo } : item
-        )
-      )
+      setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
       showError(error)
     }

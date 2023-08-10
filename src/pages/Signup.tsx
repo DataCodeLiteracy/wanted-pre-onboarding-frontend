@@ -6,6 +6,7 @@ import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import useError from '../Hooks/useError'
 import { useNavigate } from 'react-router-dom'
+import { COMPLETED_SIGN_UP } from '../utils/message'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -32,7 +33,7 @@ export default function Signup() {
     try {
       await authUser('/signup', { email, password })
 
-      window.alert('회원가입이 완료되었습니다!')
+      window.alert(COMPLETED_SIGN_UP)
 
       navigate('/signin')
     } catch (error) {
@@ -43,11 +44,7 @@ export default function Signup() {
   return (
     <AuthWrapper>
       <AppHeader />
-      <Auth
-        AuthTitle="회원가입"
-        AuthButtonText="가입하기"
-        handleAuth={handleSignup}
-      />
+      <Auth title="회원가입" buttonText="가입하기" handleAuth={handleSignup} />
     </AuthWrapper>
   )
 }
