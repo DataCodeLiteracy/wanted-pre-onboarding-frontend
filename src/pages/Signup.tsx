@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import { authUser } from '../api/AuthApi'
@@ -13,13 +13,7 @@ export default function Signup() {
 
   const navigate = useNavigate()
 
-  const { email, password, accessToken } = authContext
-
-  useEffect(() => {
-    if (accessToken) {
-      navigate('/todo')
-    }
-  }, [])
+  const { email, password } = authContext
 
   if (!authContext) {
     return null

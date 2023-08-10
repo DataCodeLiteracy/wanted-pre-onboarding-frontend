@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import Auth from '../components/Auth'
 import AppHeader from '../components/AppHeader'
@@ -14,13 +14,7 @@ export default function Signin() {
 
   const navigate = useNavigate()
 
-  const { email, password, accessToken } = authContext
-
-  useEffect(() => {
-    if (accessToken) {
-      navigate('/todo')
-    }
-  }, [])
+  const { email, password } = authContext
 
   if (!authContext) {
     return null

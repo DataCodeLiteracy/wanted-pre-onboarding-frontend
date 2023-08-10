@@ -69,7 +69,7 @@ export default function Todo() {
       window.location.href = '/signin'
       return
     }
-  }, [])
+  }, [accessToken])
 
   return (
     <TodoWrapper>

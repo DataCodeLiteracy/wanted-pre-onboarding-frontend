@@ -1,10 +1,10 @@
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useState, useEffect } from 'react'
 import localToken from '../api/LocalToken'
+import { useNavigate } from 'react-router-dom'
 
 export interface AuthContextProps {
   email: string
   password: string
-  accessToken: string | null
   handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handlePasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -15,7 +15,20 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const accessToken = localToken.get()
+  const navigate = useNavigate()
+
+  const path = window.location.pathname
+
+  useEffect(() => {
+    const accessToken = localToken.get()
+    const authPath = ['/signin', '/signup']
+
+    if (accessToken) {
+      if (authPath.includes(path)) {
+        navigate('/todo')
+      }
+    }
+  }, [path, navigate])
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.target.value)
@@ -30,7 +43,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const contextValue: AuthContextProps = {
     email,
     password,
-    accessToken,
     handleEmailChange,
     handlePasswordChange
   }
