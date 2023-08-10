@@ -7,7 +7,7 @@ import {
 import { FiEdit } from 'react-icons/fi'
 import { Li, TodoListButton, Label } from '../styles/TodoStyle'
 import { ITodo, OnTodoFunction } from '../pages/Todo'
-import useError from '../Hooks/useError'
+import { alertError } from '../utils/error'
 
 interface TodoListProps {
   todoItem: ITodo
@@ -26,7 +26,6 @@ export default function TodoList({
 
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
-  const { alertError } = useError()
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 

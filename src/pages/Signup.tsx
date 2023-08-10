@@ -4,14 +4,12 @@ import Auth from '../components/Auth'
 import { authUser } from '../api/AuthApi'
 import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
-import useError from '../Hooks/useError'
 import { useNavigate } from 'react-router-dom'
 import { COMPLETED_SIGN_UP } from '../utils/message'
+import { showError } from '../utils/error'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
-
-  const { showError } = useError()
 
   const navigate = useNavigate()
 

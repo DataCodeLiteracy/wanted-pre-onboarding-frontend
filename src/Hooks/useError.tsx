@@ -1,26 +1,25 @@
-import { useState } from 'react'
-import { AxiosError } from 'axios'
-import { UNKNOWN_ERROR } from '../utils/message'
+import { useContext, useState, useEffect } from 'react'
+import { AuthContext, AuthContextProps } from '../context/AuthContext'
 
 const useError = () => {
-  const [error, setError] = useState<Error | AxiosError | null>(null)
+  const authContext = useContext<AuthContextProps | null>(AuthContext)
 
-  const alertError = (message) => {
-    window.alert(message || UNKNOWN_ERROR)
+  const { email, password } = authContext
+
+  const [btnDisabled, setBtnDisabled] = useState(false)
+
+  const isValidEmail = email.indexOf('@') !== -1
+  const isValidPassword = password.length >= 8
+
+  useEffect(() => {
+    setBtnDisabled(!isValidEmail || !isValidPassword)
+  }, [isValidEmail, isValidPassword])
+
+  if (!authContext) {
+    return null
   }
 
-  const showError = (error) => {
-    if (error) {
-      if (error instanceof AxiosError) {
-        alertError(error.response?.data.message)
-      } else {
-        alertError(error.message)
-      }
-    }
-    setError(error)
-  }
-
-  return { error, showError, alertError }
+  return { btnDisabled, isValidEmail, isValidPassword }
 }
 
 export default useError

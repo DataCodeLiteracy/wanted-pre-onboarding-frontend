@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 import localToken from '../api/LocalToken'
-import useError from '../Hooks/useError'
+import { alertError } from '../utils/error'
 
 export default function AppHeader() {
   const [currentPath, setCurrentPath] = useState('')
-  const { alertError } = useError()
 
   const navigate = useNavigate()
 

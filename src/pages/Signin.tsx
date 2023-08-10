@@ -4,15 +4,13 @@ import Auth from '../components/Auth'
 import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import localToken from '../api/LocalToken'
-import useError from '../Hooks/useError'
 import { useNavigate } from 'react-router-dom'
 import { authUser } from '../api/AuthApi'
 import { COMPLETED_SIGN_IN } from '../utils/message'
+import { showError } from '../utils/error'
 
 export default function Signin() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
-
-  const { showError } = useError()
 
   const navigate = useNavigate()
 

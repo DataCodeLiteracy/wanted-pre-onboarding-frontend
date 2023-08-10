@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
 import { AuthContext, AuthContextProps } from '../context/AuthContext'
 import { VALID_MESSAGE_EMAIL, VALID_MESSAGE_PASSWORD } from '../utils/message'
+import useError from '../Hooks/useError'
 
 interface AuthProps {
   title: string
@@ -12,19 +13,14 @@ interface AuthProps {
 const Auth = ({ title, buttonText, handleAuth }: AuthProps) => {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
 
+  const { email, password, handleEmailChange, handlePasswordChange } =
+    authContext
+
+  const { btnDisabled, isValidEmail, isValidPassword } = useError()
+
   if (!authContext) {
     return null
   }
-
-  const {
-    email,
-    password,
-    btnDisabled,
-    isValidEmail,
-    isValidPassword,
-    handleEmailChange,
-    handlePasswordChange
-  } = authContext
 
   return (
     <AuthMain>

@@ -4,8 +4,8 @@ import TodoList from '../components/TodoList'
 import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
-import useError from '../Hooks/useError'
 import localToken from '../api/LocalToken'
+import { showError } from '../utils/error'
 
 export type onAddFunction = (todo: string) => void
 export type OnTodoFunction = (todoItem: ITodo) => void
@@ -18,7 +18,6 @@ export interface ITodo {
 
 export default function Todo() {
   const [todos, setTodos] = useState<ITodo[]>([])
-  const { showError } = useError()
 
   const accessToken = localToken.get()
 

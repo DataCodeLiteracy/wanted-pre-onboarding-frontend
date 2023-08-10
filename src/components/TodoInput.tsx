@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { TodoButton, Input, TodoInputMain, Message } from '../styles/TodoStyle'
 import { onAddFunction } from '../pages/Todo'
-import useError from '../Hooks/useError'
+import { alertError } from '../utils/error'
+import { CHECK_TODO_INPUT } from '../utils/message'
 
 interface OnAddProps {
   onAdd: onAddFunction
@@ -10,8 +11,6 @@ interface OnAddProps {
 export default function TodoInput({ onAdd }: OnAddProps) {
   const [value, setValue] = useState('')
   const [isInputEmpty, setIsInputEmpty] = useState(false)
-
-  const { alertError } = useError()
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -45,9 +44,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
         />
         <TodoButton data-testid="new-todo-add-button">추가</TodoButton>
       </div>
-      {isInputEmpty && (
-        <Message>내용을 입력한 후 추가 버튼이나 Enter를 눌러주세요.</Message>
-      )}
+      {isInputEmpty && <Message>{CHECK_TODO_INPUT}</Message>}
     </TodoInputMain>
   )
 }
