@@ -19,13 +19,18 @@ export interface ITodo {
 export default function Todo() {
   const [todos, setTodos] = useState<ITodo[]>([])
 
-  const accessToken = localToken.get()
-
   useEffect(() => {
+    const accessToken = localToken.get()
+
     ;(async () => {
       const todos = await readTodo()
       setTodos(todos)
     })()
+
+    if (!accessToken) {
+      window.location.href = '/signin'
+      return
+    }
   }, [])
 
   const handleAdd = async (todo: string) => {
@@ -63,13 +68,6 @@ export default function Todo() {
       showError(error)
     }
   }
-
-  useEffect(() => {
-    if (!accessToken) {
-      window.location.href = '/signin'
-      return
-    }
-  }, [accessToken])
 
   return (
     <TodoWrapper>

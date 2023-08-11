@@ -29,6 +29,11 @@ export default function TodoList({
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
+  const handleEditAction = (value?: string, editMode?: boolean) => {
+    setEditValue(value)
+    setIsEditing(editMode)
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const isCompleted = !!e.target.checked
@@ -48,8 +53,7 @@ export default function TodoList({
 
   const handleEditCheck = () => {
     try {
-      setIsEditing(true)
-      setEditValue(todo)
+      handleEditAction(todo, true)
     } catch (error) {
       alertError(error.message)
     }
@@ -57,7 +61,7 @@ export default function TodoList({
 
   const handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      setEditValue(e.target.value)
+      handleEditAction(e.target.value)
     } catch (error) {
       alertError(error.message)
     }
@@ -67,8 +71,7 @@ export default function TodoList({
     try {
       e.preventDefault()
       onEdit({ ...todoItem, todo: editValue })
-      setIsEditing(false)
-      setEditValue('')
+      handleEditAction('', false)
     } catch (error) {
       alertError(error.message)
     }
@@ -77,7 +80,7 @@ export default function TodoList({
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault()
-      setIsEditing(false)
+      handleEditAction(undefined, false)
     } catch (error) {
       alertError(error.message)
     }
