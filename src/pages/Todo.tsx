@@ -5,7 +5,7 @@ import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
 import localToken from '../api/LocalToken'
-import { showError } from '../utils/error'
+import { alertError } from '../utils/error'
 
 export type onAddFunction = (todo: string) => void
 export type OnTodoFunction = (todoItem: ITodo) => void
@@ -38,7 +38,7 @@ export default function Todo() {
       const createdTodo = await createTodo(todo)
       setTodos([...todos, createdTodo])
     } catch (error) {
-      showError(error)
+      alertError(error)
     }
   }
 
@@ -47,7 +47,7 @@ export default function Todo() {
       deleteTodo(id)
       setTodos(todos.filter((item) => item.id !== id))
     } catch (error) {
-      showError(error)
+      alertError(error)
     }
   }
 
@@ -56,7 +56,7 @@ export default function Todo() {
       updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
-      showError(error)
+      alertError(error)
     }
   }
 
@@ -65,7 +65,7 @@ export default function Todo() {
       updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
-      showError(error)
+      alertError(error)
     }
   }
 

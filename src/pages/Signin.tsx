@@ -7,7 +7,7 @@ import localToken from '../api/LocalToken'
 import { useNavigate } from 'react-router-dom'
 import { authUser } from '../api/AuthApi'
 import { COMPLETED_SIGN_IN } from '../utils/message'
-import { showError } from '../utils/error'
+import { alertError } from '../utils/error'
 
 export default function Signin() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -38,7 +38,7 @@ export default function Signin() {
 
       window.alert(COMPLETED_SIGN_IN)
     } catch (error) {
-      showError(error)
+      alertError(error)
     }
   }
 

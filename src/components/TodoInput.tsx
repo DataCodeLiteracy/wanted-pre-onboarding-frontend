@@ -10,14 +10,12 @@ interface OnAddProps {
 
 export default function TodoInput({ onAdd }: OnAddProps) {
   const [value, setValue] = useState('')
-  const [isInputEmpty, setIsInputEmpty] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
       onAdd(value)
       setValue('')
-      setIsInputEmpty(true)
     } catch (error) {
       alertError(error.message)
     }
@@ -26,7 +24,6 @@ export default function TodoInput({ onAdd }: OnAddProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       setValue(e.target.value)
-      setIsInputEmpty(false)
     } catch (error) {
       alertError(error.message)
     }
@@ -44,7 +41,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
         />
         <TodoButton data-testid="new-todo-add-button">추가</TodoButton>
       </div>
-      {isInputEmpty && <Message>{CHECK_TODO_INPUT}</Message>}
+      {!value && <Message>{CHECK_TODO_INPUT}</Message>}
     </TodoInputMain>
   )
 }

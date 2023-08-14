@@ -16,7 +16,9 @@ const Auth = ({ title, buttonText, handleAuth }: AuthProps) => {
   const { email, password, handleEmailChange, handlePasswordChange } =
     authContext
 
-  const { btnDisabled, isValidEmail, isValidPassword } = useError()
+  const { isValidEmail, isValidPassword } = useError()
+
+  const btnDisabled = !isValidEmail || !isValidPassword
 
   if (!authContext) {
     return null

@@ -28,7 +28,6 @@ class APIClient {
         throw new Error(err.message)
       })
   }
-
   post(endpoint: string, body: Record<string, string>) {
     return this.api
       .post(this.baseURL + endpoint, body)

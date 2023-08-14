@@ -6,7 +6,7 @@ import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 import { useNavigate } from 'react-router-dom'
 import { COMPLETED_SIGN_UP } from '../utils/message'
-import { showError } from '../utils/error'
+import { alertError } from '../utils/error'
 
 export default function Signup() {
   const authContext = useContext<AuthContextProps | null>(AuthContext)
@@ -29,7 +29,7 @@ export default function Signup() {
 
       navigate('/signin')
     } catch (error) {
-      showError(error)
+      alertError(error)
     }
   }
 
