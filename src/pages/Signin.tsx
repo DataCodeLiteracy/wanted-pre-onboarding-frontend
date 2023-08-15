@@ -30,7 +30,7 @@ export default function Signin() {
     try {
       const res = await authUser('/signin', { email, password })
 
-      const { access_token } = res
+      const { access_token } = res.data
       if (access_token) {
         saveToken(access_token)
         navigate('/todo')

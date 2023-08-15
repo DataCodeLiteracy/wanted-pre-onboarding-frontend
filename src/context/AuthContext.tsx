@@ -27,6 +27,10 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       if (authPath.includes(path)) {
         navigate('/todo')
       }
+    } else {
+      if (path === '/todo') {
+        navigate('/signin')
+      }
     }
   }, [path, navigate])
 

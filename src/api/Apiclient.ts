@@ -18,41 +18,29 @@ class APIClient {
     }
 
     this.api.defaults.headers.common = this.headers
+
+    this.api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        throw new Error(error.message)
+      }
+    )
   }
 
   get(endpoint: string) {
-    return this.api
-      .get(this.baseURL + endpoint)
-      .then((res) => res.data)
-      .catch((err) => {
-        throw new Error(err.message)
-      })
+    return this.api.get(endpoint)
   }
+
   post(endpoint: string, body: Record<string, string>) {
-    return this.api
-      .post(this.baseURL + endpoint, body)
-      .then((res) => res.data)
-      .catch((err) => {
-        throw new Error(err.message)
-      })
+    return this.api.post(endpoint, body)
   }
 
   put(endpoint: string, body: Record<string, string | boolean>) {
-    return this.api
-      .put(this.baseURL + endpoint, body)
-      .then((res) => res.data)
-      .catch((err) => {
-        throw new Error(err.message)
-      })
+    return this.api.put(endpoint, body)
   }
 
   delete(endpoint: string) {
-    return this.api
-      .delete(this.baseURL + endpoint)
-      .then((res) => res.data)
-      .catch((err) => {
-        throw new Error(err.message)
-      })
+    return this.api.delete(endpoint)
   }
 }
 

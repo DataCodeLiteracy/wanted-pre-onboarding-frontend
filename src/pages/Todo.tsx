@@ -4,7 +4,6 @@ import TodoList from '../components/TodoList'
 import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
-import localToken from '../api/LocalToken'
 import { alertError } from '../utils/error'
 
 export type onAddFunction = (todo: string) => void
@@ -19,24 +18,26 @@ export interface ITodo {
 export default function Todo() {
   const [todos, setTodos] = useState<ITodo[]>([])
 
-  useEffect(() => {
-    const accessToken = localToken.get()
+  const readTodo = async (): Promise<ITodo[]> => {
+    try {
+      const res = await getTodos()
+      return res.data
+    } catch (error) {
+      alertError(error)
+    }
+  }
 
+  useEffect(() => {
     ;(async () => {
       const todos = await readTodo()
       setTodos(todos)
     })()
-
-    if (!accessToken) {
-      window.location.href = '/signin'
-      return
-    }
   }, [])
 
   const handleAdd = async (todo: string) => {
     try {
       const createdTodo = await createTodo(todo)
-      setTodos([...todos, createdTodo])
+      setTodos([...todos, createdTodo.data])
     } catch (error) {
       alertError(error)
     }
@@ -91,9 +92,4 @@ export default function Todo() {
       </TodoMain>
     </TodoWrapper>
   )
-}
-
-async function readTodo(): Promise<ITodo[]> {
-  const res = await getTodos()
-  return res
 }
