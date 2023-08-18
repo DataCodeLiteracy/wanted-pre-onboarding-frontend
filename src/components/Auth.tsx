@@ -1,28 +1,75 @@
-import { useContext } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
-import { AuthContext, AuthContextProps } from '../context/AuthContext'
-import { VALID_MESSAGE_EMAIL, VALID_MESSAGE_PASSWORD } from '../utils/message'
-import useError from '../Hooks/useError'
+import {
+  COMPLETED_SIGN_IN,
+  COMPLETED_SIGN_UP,
+  VALID_MESSAGE_EMAIL,
+  VALID_MESSAGE_PASSWORD
+} from '../utils/message'
+import localToken from '../api/LocalToken'
+import { authUser } from '../api/AuthApi'
+import { alertError } from '../utils/error'
+import { isValidEmail, isValidPassword } from '../utils/validation'
 
 interface AuthProps {
   title: string
   buttonText: string
-  handleAuth: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const Auth = ({ title, buttonText, handleAuth }: AuthProps) => {
-  const authContext = useContext<AuthContextProps | null>(AuthContext)
+const Auth = ({ title, buttonText }: AuthProps) => {
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
 
-  const { email, password, handleEmailChange, handlePasswordChange } =
-    authContext
+  const navigate = useNavigate()
 
-  const { isValidEmail, isValidPassword } = useError()
-
-  const btnDisabled = !isValidEmail || !isValidPassword
-
-  if (!authContext) {
-    return null
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setEmail(e.target.value)
   }
+
+  const handlePasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setPassword(e.target.value)
+  }
+
+  const handleAuth = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const path = window.location.pathname
+
+    try {
+      if (path === '/signup') {
+        await authUser('/signup', { email, password })
+        window.alert(COMPLETED_SIGN_UP)
+      }
+
+      if (path === '/signin') {
+        const res = await authUser('/signin', { email, password })
+
+        const { access_token } = res.data
+
+        const saveToken = (token: string) => {
+          localToken.save(token)
+        }
+
+        if (access_token) {
+          saveToken(access_token)
+        }
+
+        window.alert(COMPLETED_SIGN_IN)
+      }
+
+      navigate(path === '/signup' ? '/signin' : '/todo')
+    } catch (error) {
+      alertError(error)
+    }
+  }
+
+  const validEmail = isValidEmail(email)
+  const validPassword = isValidPassword(password)
+
+  const btnDisabled = !validEmail || !validPassword
 
   return (
     <AuthMain>
@@ -38,7 +85,7 @@ const Auth = ({ title, buttonText, handleAuth }: AuthProps) => {
             value={email}
             onChange={handleEmailChange}
           />
-          {!isValidEmail && (
+          {!validEmail && (
             <ValidLabel htmlFor="email">{VALID_MESSAGE_EMAIL}</ValidLabel>
           )}
         </div>
@@ -52,7 +99,7 @@ const Auth = ({ title, buttonText, handleAuth }: AuthProps) => {
             value={password}
             onChange={handlePasswordChange}
           />
-          {!isValidPassword && (
+          {!validPassword && (
             <ValidLabel htmlFor="email">{VALID_MESSAGE_PASSWORD}</ValidLabel>
           )}
         </div>

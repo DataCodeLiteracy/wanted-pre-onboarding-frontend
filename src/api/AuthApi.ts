@@ -1,4 +1,3 @@
-import { REQUEST_URL } from './requestUrl'
 import APIClient from './Apiclient'
 import localToken from './LocalToken'
 
@@ -9,7 +8,10 @@ interface AuthData {
 
 type AuthEndPoint = '/signup' | '/signin'
 
-const authApi = new APIClient(REQUEST_URL + '/auth', localToken.get())
+const authApi = new APIClient(
+  process.env.REACT_APP_REQUEST_URL + '/auth',
+  localToken.get()
+)
 
 export const authUser = async (endpoint: AuthEndPoint, body: AuthData) => {
   return await authApi.post(endpoint, {

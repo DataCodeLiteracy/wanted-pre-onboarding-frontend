@@ -1,9 +1,12 @@
 import { ITodo } from './../pages/Todo'
-import { REQUEST_URL } from './requestUrl'
+// import { REQUEST_URL } from './requestUrl'
 import APIClient from './Apiclient'
 import localToken from './LocalToken'
 
-const todoApi = new APIClient(REQUEST_URL + '/todos', localToken.get())
+const todoApi = new APIClient(
+  process.env.REACT_APP_REQUEST_URL + '/todos',
+  localToken.get()
+)
 
 export const createTodo = async (todo: string) => {
   return await todoApi.post('/', { todo })
