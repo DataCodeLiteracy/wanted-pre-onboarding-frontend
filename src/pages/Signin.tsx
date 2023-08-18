@@ -3,7 +3,7 @@ import Auth from '../components/Auth'
 import AppHeader from '../components/AppHeader'
 import { AuthWrapper } from '../styles/AuthStyle'
 
-export default function Signin() {
+export default function SignIn() {
   return (
     <AuthWrapper>
       <AppHeader />

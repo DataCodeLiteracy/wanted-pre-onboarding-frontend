@@ -8,9 +8,10 @@ import {
   VALID_MESSAGE_PASSWORD
 } from '../utils/message'
 import localToken from '../api/LocalToken'
-import { authUser } from '../api/AuthApi'
+import { signInUser, signUpUser } from '../api/AuthApi'
 import { alertError } from '../utils/error'
 import { isValidEmail, isValidPassword } from '../utils/validation'
+import { todoApi } from '../api/TodoApi'
 
 interface AuthProps {
   title: string
@@ -40,17 +41,18 @@ const Auth = ({ title, buttonText }: AuthProps) => {
 
     try {
       if (path === '/signup') {
-        await authUser('/signup', { email, password })
+        await signUpUser({ email, password })
         window.alert(COMPLETED_SIGN_UP)
       }
 
       if (path === '/signin') {
-        const res = await authUser('/signin', { email, password })
+        const res = await signInUser({ email, password })
 
         const { access_token } = res.data
 
         const saveToken = (token: string) => {
           localToken.save(token)
+          todoApi.setToken(token)
         }
 
         if (access_token) {

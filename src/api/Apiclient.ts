@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 
 class APIClient {
   private readonly api: AxiosInstance
@@ -7,7 +7,7 @@ class APIClient {
 
   constructor(
     baseURL: string,
-    localToken: string,
+    localToken?: string,
     config?: AxiosRequestConfig
   ) {
     this.baseURL = baseURL
@@ -22,7 +22,11 @@ class APIClient {
     this.api.interceptors.response.use(
       (response) => response,
       (error) => {
-        throw new Error(error.message)
+        if (error.response) {
+          throw error
+        } else {
+          throw new AxiosError(error)
+        }
       }
     )
   }
@@ -41,6 +45,13 @@ class APIClient {
 
   delete(endpoint: string) {
     return this.api.delete(endpoint)
+  }
+
+  setToken(localToken: string) {
+    this.api.defaults.headers.common = {
+      ...this.api.defaults.headers.common,
+      Authorization: `Bearer ${localToken}`
+    }
   }
 }
 

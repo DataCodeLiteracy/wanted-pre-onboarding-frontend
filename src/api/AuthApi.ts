@@ -1,20 +1,26 @@
 import APIClient from './Apiclient'
-import localToken from './LocalToken'
 
 interface AuthData {
   email: string
   password: string
 }
 
-type AuthEndPoint = '/signup' | '/signin'
+const SIGN_UP = '/signup'
+const SIGN_IN = '/signin'
 
-const authApi = new APIClient(
-  process.env.REACT_APP_REQUEST_URL + '/auth',
-  localToken.get()
+export const authApi = new APIClient(
+  process.env.REACT_APP_REQUEST_URL + '/auth'
 )
 
-export const authUser = async (endpoint: AuthEndPoint, body: AuthData) => {
-  return await authApi.post(endpoint, {
+export const signUpUser = async (body: AuthData) => {
+  return await authApi.post(SIGN_UP, {
+    email: body.email,
+    password: body.password
+  })
+}
+
+export const signInUser = async (body: AuthData) => {
+  return await authApi.post(SIGN_IN, {
     email: body.email,
     password: body.password
   })

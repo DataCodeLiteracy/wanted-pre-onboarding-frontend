@@ -1,9 +1,8 @@
 import { ITodo } from './../pages/Todo'
-// import { REQUEST_URL } from './requestUrl'
 import APIClient from './Apiclient'
 import localToken from './LocalToken'
 
-const todoApi = new APIClient(
+export const todoApi = new APIClient(
   process.env.REACT_APP_REQUEST_URL + '/todos',
   localToken.get()
 )
