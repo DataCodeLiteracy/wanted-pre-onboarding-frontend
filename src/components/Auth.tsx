@@ -11,7 +11,6 @@ import localToken from '../api/LocalToken'
 import { signInUser, signUpUser } from '../api/AuthApi'
 import { alertError } from '../utils/error'
 import { isValidEmail, isValidPassword } from '../utils/validation'
-import { todoApi } from '../api/TodoApi'
 
 interface AuthProps {
   title: string
@@ -52,7 +51,6 @@ const Auth = ({ title, buttonText }: AuthProps) => {
 
         const saveToken = (token: string) => {
           localToken.save(token)
-          todoApi.setToken(token)
         }
 
         if (access_token) {

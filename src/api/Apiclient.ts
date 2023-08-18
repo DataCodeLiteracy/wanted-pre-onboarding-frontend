@@ -1,57 +1,59 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import localToken from './LocalToken'
 
+type Method = 'get' | 'post' | 'put' | 'delete'
 class APIClient {
   private readonly api: AxiosInstance
   headers: Record<string, string>
   baseURL: string
 
-  constructor(
-    baseURL: string,
-    localToken?: string,
+  constructor(baseURL: string, config?: AxiosRequestConfig) {
+    this.baseURL = baseURL
+    this.api = axios.create({ baseURL })
+  }
+
+  get(endpoint: string) {
+    return this.request('get', endpoint)
+  }
+
+  post(endpoint: string, body: Record<string, string>) {
+    return this.request('post', endpoint, body)
+  }
+
+  put(endpoint: string, body: Record<string, string | boolean>) {
+    return this.request('put', endpoint, body)
+  }
+
+  delete(endpoint: string) {
+    return this.request('delete', endpoint)
+  }
+
+  private request(
+    method: Method,
+    url: string,
+    data: Record<string, string | boolean> = {},
     config?: AxiosRequestConfig
   ) {
-    this.baseURL = baseURL
-    this.api = axios.create({ baseURL, ...config })
-    this.headers = {
-      Authorization: `Bearer ${localToken}`,
-      'Content-Type': 'application/json'
-    }
-
-    this.api.defaults.headers.common = this.headers
-
-    this.api.interceptors.response.use(
-      (response) => response,
-      (error) => {
+    return this.api
+      .request({
+        method,
+        url,
+        data: method === 'post' || method === 'put' ? data : undefined,
+        headers: {
+          ...this.headers,
+          Authorization: `Bearer ${localToken.get()}`,
+          'Content-Type': 'application/json'
+        },
+        ...config
+      })
+      .then((res) => res)
+      .catch((error) => {
         if (error.response) {
           throw error
         } else {
           throw new AxiosError(error)
         }
-      }
-    )
-  }
-
-  get(endpoint: string) {
-    return this.api.get(endpoint)
-  }
-
-  post(endpoint: string, body: Record<string, string>) {
-    return this.api.post(endpoint, body)
-  }
-
-  put(endpoint: string, body: Record<string, string | boolean>) {
-    return this.api.put(endpoint, body)
-  }
-
-  delete(endpoint: string) {
-    return this.api.delete(endpoint)
-  }
-
-  setToken(localToken: string) {
-    this.api.defaults.headers.common = {
-      ...this.api.defaults.headers.common,
-      Authorization: `Bearer ${localToken}`
-    }
+      })
   }
 }
 
