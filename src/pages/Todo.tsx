@@ -21,7 +21,7 @@ export default function Todo() {
   const readTodo = async (): Promise<ITodo[]> => {
     try {
       const res = await getTodos()
-      return res.data
+      return res
     } catch (error) {
       alertError(error)
     }
@@ -37,7 +37,7 @@ export default function Todo() {
   const handleAdd = async (todo: string) => {
     try {
       const createdTodo = await createTodo(todo)
-      setTodos([...todos, createdTodo.data])
+      setTodos([...todos, createdTodo])
     } catch (error) {
       alertError(error)
     }

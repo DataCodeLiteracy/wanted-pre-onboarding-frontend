@@ -47,7 +47,7 @@ const Auth = ({ title, buttonText }: AuthProps) => {
       if (path === '/signin') {
         const res = await signInUser({ email, password })
 
-        const { access_token } = res.data
+        const { access_token } = res
 
         const saveToken = (token: string) => {
           localToken.save(token)

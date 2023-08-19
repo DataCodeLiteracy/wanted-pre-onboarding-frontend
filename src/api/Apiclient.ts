@@ -1,9 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import localToken from './LocalToken'
 
 type Method = 'get' | 'post' | 'put' | 'delete'
@@ -17,34 +12,28 @@ class APIClient {
     this.api = axios.create({ baseURL })
   }
 
-  get<T>(endpoint: string): Promise<AxiosResponse<T>> {
+  get<T>(endpoint: string): Promise<T> {
     return this.request('get', endpoint)
   }
 
-  post<T>(
-    endpoint: string,
-    body: Record<string, string>
-  ): Promise<AxiosResponse<T>> {
+  post<T>(endpoint: string, body: Record<string, string>): Promise<T> {
     return this.request('post', endpoint, body)
   }
 
-  put<T>(
-    endpoint: string,
-    body: Record<string, string | boolean>
-  ): Promise<AxiosResponse<T>> {
+  put<T>(endpoint: string, body: Record<string, string | boolean>): Promise<T> {
     return this.request('put', endpoint, body)
   }
 
-  delete<T>(endpoint: string): Promise<AxiosResponse<T>> {
+  delete<T>(endpoint: string): Promise<T> {
     return this.request('delete', endpoint)
   }
 
-  private request(
+  private request<T>(
     method: Method,
     url: string,
     data: Record<string, string | boolean> = {},
     config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<any>> {
+  ): Promise<T> {
     return this.api
       .request({
         method,
@@ -57,7 +46,7 @@ class APIClient {
         },
         ...config
       })
-      .then((res) => res)
+      .then((res) => res.data)
       .catch((error) => {
         if (error.response) {
           throw error

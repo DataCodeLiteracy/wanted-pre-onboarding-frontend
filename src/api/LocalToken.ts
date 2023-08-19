@@ -1,7 +1,7 @@
 class LocalToken {
   #TOKEN_KEY = 'access_token'
 
-  save(token) {
+  save(token: string) {
     localStorage.setItem(this.#TOKEN_KEY, token)
   }
 
