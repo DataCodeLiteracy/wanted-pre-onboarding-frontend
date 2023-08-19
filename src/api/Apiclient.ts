@@ -1,4 +1,9 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse
+} from 'axios'
 import localToken from './LocalToken'
 
 type Method = 'get' | 'post' | 'put' | 'delete'
@@ -12,19 +17,25 @@ class APIClient {
     this.api = axios.create({ baseURL })
   }
 
-  get(endpoint: string) {
+  get<T>(endpoint: string): Promise<AxiosResponse<T>> {
     return this.request('get', endpoint)
   }
 
-  post(endpoint: string, body: Record<string, string>) {
+  post<T>(
+    endpoint: string,
+    body: Record<string, string>
+  ): Promise<AxiosResponse<T>> {
     return this.request('post', endpoint, body)
   }
 
-  put(endpoint: string, body: Record<string, string | boolean>) {
+  put<T>(
+    endpoint: string,
+    body: Record<string, string | boolean>
+  ): Promise<AxiosResponse<T>> {
     return this.request('put', endpoint, body)
   }
 
-  delete(endpoint: string) {
+  delete<T>(endpoint: string): Promise<AxiosResponse<T>> {
     return this.request('delete', endpoint)
   }
 
@@ -33,7 +44,7 @@ class APIClient {
     url: string,
     data: Record<string, string | boolean> = {},
     config?: AxiosRequestConfig
-  ) {
+  ): Promise<AxiosResponse<any>> {
     return this.api
       .request({
         method,

@@ -20,7 +20,7 @@ export const signUpUser = async (body: AuthData) => {
 }
 
 export const signInUser = async (body: AuthData) => {
-  return await authApi.post(SIGN_IN, {
+  return await authApi.post<{ access_token: string }>(SIGN_IN, {
     email: body.email,
     password: body.password
   })
