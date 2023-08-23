@@ -38,10 +38,12 @@ export default function TodoInput({ onAdd }: OnAddProps) {
           value={value}
           onChange={handleChange}
           placeholder="할 일을 입력해주세요."
+          aria-invalid="true"
+          aria-errormessage="invalid-input-value"
         />
         <TodoButton data-testid="new-todo-add-button">추가</TodoButton>
       </div>
-      {!value && <Message>{CHECK_TODO_INPUT}</Message>}
+      {!value && <Message id="invalid-input-value">{CHECK_TODO_INPUT}</Message>}
     </TodoInputMain>
   )
 }

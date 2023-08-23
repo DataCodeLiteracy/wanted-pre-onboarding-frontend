@@ -17,9 +17,13 @@ interface AuthProps {
   buttonText: string
 }
 
+const SIGN_UP = '/signup'
+const SIGN_IN = '/signin'
+const TODO = '/todo'
+
 const Auth = ({ title, buttonText }: AuthProps) => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const navigate = useNavigate()
 
@@ -39,12 +43,12 @@ const Auth = ({ title, buttonText }: AuthProps) => {
     const path = window.location.pathname
 
     try {
-      if (path === '/signup') {
+      if (path === SIGN_UP) {
         await signUpUser({ email, password })
         window.alert(COMPLETED_SIGN_UP)
       }
 
-      if (path === '/signin') {
+      if (path === SIGN_IN) {
         const res = await signInUser({ email, password })
 
         const { access_token } = res
@@ -60,16 +64,16 @@ const Auth = ({ title, buttonText }: AuthProps) => {
         window.alert(COMPLETED_SIGN_IN)
       }
 
-      navigate(path === '/signup' ? '/signin' : '/todo')
+      navigate(path === SIGN_UP ? SIGN_IN : TODO)
     } catch (error) {
       alertError(error)
     }
   }
 
-  const validEmail = isValidEmail(email)
-  const validPassword = isValidPassword(password)
+  const invalidEmail = isValidEmail(email)
+  const invalidPassword = isValidPassword(password)
 
-  const btnDisabled = !validEmail || !validPassword
+  const btnDisabled = !invalidEmail || !invalidPassword
 
   return (
     <AuthMain>
@@ -84,9 +88,13 @@ const Auth = ({ title, buttonText }: AuthProps) => {
             placeholder="이메일 입력"
             value={email}
             onChange={handleEmailChange}
+            aria-invalid="true"
+            aria-errormessage="invalid-email-message"
           />
-          {!validEmail && (
-            <ValidLabel htmlFor="email">{VALID_MESSAGE_EMAIL}</ValidLabel>
+          {!invalidEmail && (
+            <ValidLabel id="invalid-email-message" htmlFor="email">
+              {VALID_MESSAGE_EMAIL}
+            </ValidLabel>
           )}
         </div>
         <div>
@@ -98,9 +106,13 @@ const Auth = ({ title, buttonText }: AuthProps) => {
             placeholder="비밀번호 입력"
             value={password}
             onChange={handlePasswordChange}
+            aria-invalid="true"
+            aria-errormessage="invalid-password-message"
           />
-          {!validPassword && (
-            <ValidLabel htmlFor="email">{VALID_MESSAGE_PASSWORD}</ValidLabel>
+          {!invalidPassword && (
+            <ValidLabel id="invalid-password-message" htmlFor="email">
+              {VALID_MESSAGE_PASSWORD}
+            </ValidLabel>
           )}
         </div>
 
