@@ -4,12 +4,17 @@ import localToken from './LocalToken'
 type Method = 'get' | 'post' | 'put' | 'delete'
 class APIClient {
   private readonly api: AxiosInstance
-  headers: Record<string, string>
+  headers: Record<string, string | boolean>
   baseURL: string
 
-  constructor(baseURL: string, config?: AxiosRequestConfig) {
+  constructor(
+    baseURL: string,
+    headers: Record<string, string | boolean> = {},
+    config?: AxiosRequestConfig
+  ) {
     this.baseURL = baseURL
-    this.api = axios.create({ baseURL })
+    this.headers = headers
+    this.api = axios.create({ baseURL, headers })
   }
 
   get<T>(endpoint: string): Promise<T> {

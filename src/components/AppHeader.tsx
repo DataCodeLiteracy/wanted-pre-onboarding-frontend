@@ -4,6 +4,7 @@ import { Button, FlexDiv, Nav } from '../styles/HeaderStyle'
 import { AiFillHome } from 'react-icons/ai'
 import localToken from '../api/LocalToken'
 import { alertError } from '../utils/error'
+import { AxiosError } from 'axios'
 
 export default function AppHeader() {
   const [currentPath, setCurrentPath] = useState('')
@@ -17,7 +18,9 @@ export default function AppHeader() {
       window.alert('로그아웃 되었습니다.')
       navigate('/')
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 

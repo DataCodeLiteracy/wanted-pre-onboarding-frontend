@@ -8,6 +8,7 @@ import { FiEdit } from 'react-icons/fi'
 import { Li, TodoListButton, Label } from '../styles/TodoStyle'
 import { ITodo, OnTodoFunction } from '../pages/Todo'
 import { alertError } from '../utils/error'
+import { AxiosError } from 'axios'
 
 interface TodoListProps {
   todoItem: ITodo
@@ -25,11 +26,11 @@ export default function TodoList({
   const { id, todo, isCompleted } = todoItem
 
   const [isEditing, setIsEditing] = useState(false)
-  const [editValue, setEditValue] = useState('')
+  const [editValue, setEditValue] = useState<string>('')
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const handleEditAction = (value?: string, editMode?: boolean) => {
+  const handleEditAction = (value: string, editMode?: boolean) => {
     if (editMode) {
       setIsEditing(!editMode)
     }
@@ -42,7 +43,9 @@ export default function TodoList({
       const isCompleted = !!e.target.checked
       onCheck({ ...todoItem, isCompleted })
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -50,7 +53,9 @@ export default function TodoList({
     try {
       onDelete(id)
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -58,7 +63,9 @@ export default function TodoList({
     try {
       handleEditAction(todo, false)
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -66,7 +73,9 @@ export default function TodoList({
     try {
       handleEditAction(e.target.value)
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -76,7 +85,9 @@ export default function TodoList({
       onEdit({ ...todoItem, todo: editValue })
       handleEditAction('', true)
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -85,7 +96,9 @@ export default function TodoList({
       e.preventDefault()
       handleEditAction('', true)
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 

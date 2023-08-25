@@ -5,6 +5,7 @@ import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
 import { alertError } from '../utils/error'
+import { AxiosError } from 'axios'
 
 export type onAddFunction = (todo: string) => void
 export type OnTodoFunction = (todoItem: ITodo) => void
@@ -23,7 +24,10 @@ export default function Todo() {
       const res = await getTodos()
       return res
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
+      return []
     }
   }
 
@@ -39,7 +43,9 @@ export default function Todo() {
       const createdTodo = await createTodo(todo)
       setTodos([...todos, createdTodo])
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -48,7 +54,9 @@ export default function Todo() {
       deleteTodo(id)
       setTodos(todos.filter((item) => item.id !== id))
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -57,7 +65,9 @@ export default function Todo() {
       updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -66,7 +76,9 @@ export default function Todo() {
       updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 

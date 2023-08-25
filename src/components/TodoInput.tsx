@@ -3,6 +3,7 @@ import { TodoButton, Input, TodoInputMain, Message } from '../styles/TodoStyle'
 import { onAddFunction } from '../pages/Todo'
 import { alertError } from '../utils/error'
 import { CHECK_TODO_INPUT } from '../utils/message'
+import { AxiosError } from 'axios'
 
 interface OnAddProps {
   onAdd: onAddFunction
@@ -17,7 +18,9 @@ export default function TodoInput({ onAdd }: OnAddProps) {
       onAdd(value)
       setValue('')
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
@@ -25,7 +28,9 @@ export default function TodoInput({ onAdd }: OnAddProps) {
     try {
       setValue(e.target.value)
     } catch (error) {
-      alertError(error.message)
+      if (error instanceof AxiosError) {
+        alertError(error)
+      }
     }
   }
 
