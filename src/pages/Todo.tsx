@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import TodoInput from '../components/TodoInput'
 import TodoList from '../components/TodoList'
-import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
 import { alertError } from '../utils/error'
@@ -84,7 +83,6 @@ export default function Todo() {
 
   return (
     <TodoWrapper>
-      <AppHeader />
       <TodoMain>
         <TodoTitle>TODO LIST</TodoTitle>
         <TodoInput onAdd={handleAdd} />
