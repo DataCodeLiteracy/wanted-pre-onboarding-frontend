@@ -30,14 +30,6 @@ export default function TodoList({
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const handleEditAction = (value: string, editMode?: boolean) => {
-    if (editMode) {
-      setIsEditing(!editMode)
-    }
-    setIsEditing(!editMode)
-    setEditValue(value)
-  }
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const isCompleted = !!e.target.checked
@@ -61,7 +53,7 @@ export default function TodoList({
 
   const handleEditCheck = () => {
     try {
-      handleEditAction(todo, false)
+      handleEditAction(todo)
     } catch (error) {
       if (error instanceof AxiosError) {
         alertError(error)
@@ -71,7 +63,7 @@ export default function TodoList({
 
   const handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
-      handleEditAction(e.target.value)
+      setEditValue(e.target.value)
     } catch (error) {
       if (error instanceof AxiosError) {
         alertError(error)
@@ -79,11 +71,20 @@ export default function TodoList({
     }
   }
 
+  const handleEditAction = (value: string) => {
+    handleToggleAction()
+    setEditValue(value)
+  }
+
+  const handleToggleAction = () => {
+    setIsEditing(!isEditing)
+  }
+
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault()
       onEdit({ ...todoItem, todo: editValue })
-      handleEditAction('', true)
+      handleEditAction('')
     } catch (error) {
       if (error instanceof AxiosError) {
         alertError(error)
@@ -94,7 +95,7 @@ export default function TodoList({
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault()
-      handleEditAction('', true)
+      handleEditAction('')
     } catch (error) {
       if (error instanceof AxiosError) {
         alertError(error)
