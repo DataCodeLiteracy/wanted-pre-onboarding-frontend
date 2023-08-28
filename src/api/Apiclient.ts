@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import localToken from './LocalToken'
 
 type Method = 'get' | 'post' | 'put' | 'delete'
@@ -53,11 +53,7 @@ class APIClient {
       })
       .then((res) => res.data)
       .catch((error) => {
-        if (error.response) {
-          throw error
-        } else {
-          throw new AxiosError(error)
-        }
+        throw error
       })
   }
 }

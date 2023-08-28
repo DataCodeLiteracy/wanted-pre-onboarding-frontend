@@ -4,12 +4,13 @@ import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
 import {
   COMPLETED_SIGN_IN,
   COMPLETED_SIGN_UP,
+  PASSWORD_ERROR,
+  UNKNOWN_ERROR,
   VALID_MESSAGE_EMAIL,
   VALID_MESSAGE_PASSWORD
 } from '../utils/message'
 import localToken from '../api/LocalToken'
 import { signInUser, signUpUser } from '../api/AuthApi'
-import { alertError } from '../utils/error'
 import { isValidEmail, isValidPassword } from '../utils/validation'
 import { AxiosError } from 'axios'
 
@@ -46,11 +47,16 @@ const Auth = ({ title, buttonText }: AuthProps) => {
     try {
       if (path === SIGN_UP) {
         await signUpUser({ email, password })
+
         window.alert(COMPLETED_SIGN_UP)
       }
 
       if (path === SIGN_IN) {
         const res = await signInUser({ email, password })
+
+        if (!res) {
+          return
+        }
 
         const { access_token } = res
 
@@ -68,7 +74,13 @@ const Auth = ({ title, buttonText }: AuthProps) => {
       navigate(path === SIGN_UP ? SIGN_IN : TODO)
     } catch (error) {
       if (error instanceof AxiosError) {
-        alertError(error)
+        if (error.response?.status === 401) {
+          window.alert(PASSWORD_ERROR)
+        } else {
+          window.alert(error?.response?.data.message)
+        }
+      } else {
+        window.alert(UNKNOWN_ERROR)
       }
     }
   }

@@ -25,13 +25,7 @@ export default function TodoInput({ onAdd }: OnAddProps) {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      setValue(e.target.value)
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    setValue(e.target.value)
   }
 
   return (

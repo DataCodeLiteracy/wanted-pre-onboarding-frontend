@@ -42,33 +42,15 @@ export default function TodoList({
   }
 
   const handleDelete = () => {
-    try {
-      onDelete(id)
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    onDelete(id)
   }
 
   const handleEditCheck = () => {
-    try {
-      handleEditAction(todo)
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    handleEditAction(todo)
   }
 
   const handleEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      setEditValue(e.target.value)
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    setEditValue(e.target.value)
   }
 
   const handleEditAction = (value: string) => {
@@ -81,26 +63,19 @@ export default function TodoList({
   }
 
   const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault()
-      onEdit({ ...todoItem, todo: editValue })
-      handleEditAction('')
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
+    e.preventDefault()
+
+    if (!editValue) {
+      setEditValue('')
+      return
     }
+
+    onEdit({ ...todoItem, todo: editValue })
+    handleEditAction('')
   }
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    try {
-      e.preventDefault()
-      handleEditAction('')
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    handleToggleAction()
   }
 
   useEffect(() => {

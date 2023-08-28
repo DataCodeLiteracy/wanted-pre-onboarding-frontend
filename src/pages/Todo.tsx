@@ -43,7 +43,7 @@ export default function Todo() {
       setTodos([...todos, createdTodo])
     } catch (error) {
       if (error instanceof AxiosError) {
-        alertError(error)
+        window.alert(error.response?.data.message)
       }
     }
   }
@@ -71,14 +71,8 @@ export default function Todo() {
   }
 
   const handleEdit = (todoItem: ITodo) => {
-    try {
-      updateTodo(todoItem)
-      setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    updateTodo(todoItem)
+    setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
   }
 
   return (
