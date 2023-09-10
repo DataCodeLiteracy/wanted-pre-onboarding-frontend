@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios'
 import { ITodo } from './../pages/Todo'
 import APIClient from './Apiclient'
 
@@ -15,22 +14,12 @@ export const getTodos = async () => {
 }
 
 export const updateTodo = async (checked: ITodo) => {
-  return await todoApi
-    .put<ITodo>(`s/${checked.id}`, {
-      todo: checked.todo,
-      isCompleted: checked.isCompleted
-    })
-    .catch((error) => {
-      if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
-      }
-    })
+  return await todoApi.put<ITodo>(`/${checked.id}`, {
+    todo: checked.todo,
+    isCompleted: checked.isCompleted
+  })
 }
 
 export const deleteTodo = async (id: number) => {
-  return await todoApi.delete<ITodo[]>(`/${id}`).catch((error) => {
-    if (error instanceof AxiosError) {
-      alert(error.response?.data.message)
-    }
-  })
+  return await todoApi.delete<ITodo[]>(`/${id}`)
 }

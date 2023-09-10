@@ -7,6 +7,7 @@ import {
 import { FiEdit } from 'react-icons/fi'
 import { Li, TodoListButton, Label } from '../styles/TodoStyle'
 import { ITodo, OnTodoFunction } from '../pages/Todo'
+import { AxiosError } from 'axios'
 
 interface TodoListProps {
   todoItem: ITodo
@@ -34,7 +35,13 @@ export default function TodoList({
   }
 
   const handleDelete = () => {
-    onDelete(id)
+    try {
+      onDelete(id)
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
+    }
   }
 
   const handleEditCheck = () => {

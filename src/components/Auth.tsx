@@ -4,13 +4,13 @@ import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
 import {
   COMPLETED_SIGN_IN,
   COMPLETED_SIGN_UP,
-  UNKNOWN_ERROR,
   VALID_MESSAGE_EMAIL,
   VALID_MESSAGE_PASSWORD
 } from '../utils/message'
 import localToken from '../api/LocalToken'
 import { signInUser, signUpUser } from '../api/AuthApi'
 import { isValidEmail, isValidPassword } from '../utils/validation'
+import { AxiosError } from 'axios'
 
 interface AuthProps {
   title: string
@@ -70,11 +70,10 @@ const Auth = ({ title, buttonText }: AuthProps) => {
       }
 
       navigate(path === SIGN_UP ? SIGN_IN : TODO)
-    } catch (error: unknown) {
-      if (error instanceof Error) {
+    } catch (error) {
+      if (error instanceof AxiosError) {
         alert(error.message)
       }
-      alert(UNKNOWN_ERROR)
     }
   }
 

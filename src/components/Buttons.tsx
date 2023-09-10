@@ -1,7 +1,6 @@
 import { AiFillHome } from 'react-icons/ai'
 import { Button, FlexDiv } from '../styles/HeaderStyle'
 import localToken from '../api/LocalToken'
-import { alertError } from '../utils/error'
 import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
 
@@ -16,7 +15,7 @@ const Buttons = () => {
       navigate('/')
     } catch (error) {
       if (error instanceof AxiosError) {
-        alertError(error)
+        alert(error)
       }
     }
   }

@@ -56,17 +56,16 @@ class APIClient {
         ...config
       })
       .then((res) => {
-        if (res.data.error) {
-          throw res.data.error.message
-        }
         return res.data
       })
       .catch((error) => {
         if (error instanceof AxiosError) {
           if (error.response?.status === 401) {
-            throw new Error(PASSWORD_ERROR)
+            throw new AxiosError(PASSWORD_ERROR)
+          } else if (error.response?.status === 404) {
+            throw new AxiosError(error?.response?.data.message)
           } else {
-            throw new Error(error?.response?.data.message)
+            throw new AxiosError(error?.response?.data.message)
           }
         } else {
           throw new Error(UNKNOWN_ERROR)

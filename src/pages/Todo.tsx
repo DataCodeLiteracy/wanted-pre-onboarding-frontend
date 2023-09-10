@@ -23,7 +23,7 @@ export default function Todo() {
       return res
     } catch (error) {
       if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
+        alert(error)
       }
       return []
     }
@@ -42,24 +42,42 @@ export default function Todo() {
       setTodos([...todos, createdTodo])
     } catch (error) {
       if (error instanceof AxiosError) {
-        alert(error.response?.data.message)
+        alert(error)
       }
     }
   }
 
-  const handleDelete = (id: number) => {
-    deleteTodo(id)
-    setTodos(todos.filter((item) => item.id !== id))
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteTodo(id)
+      setTodos(todos.filter((item) => item.id !== id))
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
+    }
   }
 
-  const handleCheck = (todoItem: ITodo) => {
-    updateTodo(todoItem)
-    setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
+  const handleCheck = async (todoItem: ITodo) => {
+    try {
+      await updateTodo(todoItem)
+      setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
+    }
   }
 
-  const handleEdit = (todoItem: ITodo) => {
-    updateTodo(todoItem)
-    setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
+  const handleEdit = async (todoItem: ITodo) => {
+    try {
+      await updateTodo(todoItem)
+      setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
+    }
   }
 
   return (
