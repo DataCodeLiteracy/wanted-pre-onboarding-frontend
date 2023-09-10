@@ -4,7 +4,6 @@ import { AuthForm, AuthH1, AuthMain, ValidLabel } from '../styles/AuthStyle'
 import {
   COMPLETED_SIGN_IN,
   COMPLETED_SIGN_UP,
-  PASSWORD_ERROR,
   UNKNOWN_ERROR,
   VALID_MESSAGE_EMAIL,
   VALID_MESSAGE_PASSWORD
@@ -12,7 +11,6 @@ import {
 import localToken from '../api/LocalToken'
 import { signInUser, signUpUser } from '../api/AuthApi'
 import { isValidEmail, isValidPassword } from '../utils/validation'
-import { AxiosError } from 'axios'
 
 interface AuthProps {
   title: string

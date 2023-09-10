@@ -7,8 +7,6 @@ import {
 import { FiEdit } from 'react-icons/fi'
 import { Li, TodoListButton, Label } from '../styles/TodoStyle'
 import { ITodo, OnTodoFunction } from '../pages/Todo'
-import { alertError } from '../utils/error'
-import { AxiosError } from 'axios'
 
 interface TodoListProps {
   todoItem: ITodo

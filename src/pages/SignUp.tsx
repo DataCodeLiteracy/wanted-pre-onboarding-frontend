@@ -13,6 +13,7 @@ export default function SignUp() {
     if (accessToken) {
       navigate('/todo')
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
