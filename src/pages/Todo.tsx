@@ -3,7 +3,6 @@ import TodoInput from '../components/TodoInput'
 import TodoList from '../components/TodoList'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
-import { alertError } from '../utils/error'
 import { AxiosError } from 'axios'
 
 export type onAddFunction = (todo: string) => void
@@ -24,7 +23,7 @@ export default function Todo() {
       return res
     } catch (error) {
       if (error instanceof AxiosError) {
-        alertError(error)
+        alert(error.response?.data.message)
       }
       return []
     }
@@ -43,31 +42,19 @@ export default function Todo() {
       setTodos([...todos, createdTodo])
     } catch (error) {
       if (error instanceof AxiosError) {
-        window.alert(error.response?.data.message)
+        alert(error.response?.data.message)
       }
     }
   }
 
   const handleDelete = (id: number) => {
-    try {
-      deleteTodo(id)
-      setTodos(todos.filter((item) => item.id !== id))
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    deleteTodo(id)
+    setTodos(todos.filter((item) => item.id !== id))
   }
 
   const handleCheck = (todoItem: ITodo) => {
-    try {
-      updateTodo(todoItem)
-      setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    updateTodo(todoItem)
+    setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
   }
 
   const handleEdit = (todoItem: ITodo) => {

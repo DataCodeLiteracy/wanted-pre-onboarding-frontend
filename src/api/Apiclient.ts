@@ -1,5 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 import localToken from './LocalToken'
+import { PASSWORD_ERROR, UNKNOWN_ERROR } from '../utils/message'
 
 type Method = 'get' | 'post' | 'put' | 'delete'
 class APIClient {
@@ -33,6 +34,9 @@ class APIClient {
     return this.request('delete', endpoint)
   }
 
+  /**
+   *
+   */
   private request<T>(
     method: Method,
     url: string,
@@ -51,9 +55,22 @@ class APIClient {
         },
         ...config
       })
-      .then((res) => res.data)
+      .then((res) => {
+        if (res.data.error) {
+          throw res.data.error.message
+        }
+        return res.data
+      })
       .catch((error) => {
-        throw error
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 401) {
+            throw new Error(PASSWORD_ERROR)
+          } else {
+            throw new Error(error?.response?.data.message)
+          }
+        } else {
+          throw new Error(UNKNOWN_ERROR)
+        }
       })
   }
 }

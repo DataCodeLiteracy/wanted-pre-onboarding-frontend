@@ -31,14 +31,8 @@ export default function TodoList({
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const isCompleted = !!e.target.checked
-      onCheck({ ...todoItem, isCompleted })
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    const isCompleted = !!e.target.checked
+    onCheck({ ...todoItem, isCompleted })
   }
 
   const handleDelete = () => {

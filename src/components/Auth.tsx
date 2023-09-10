@@ -72,16 +72,11 @@ const Auth = ({ title, buttonText }: AuthProps) => {
       }
 
       navigate(path === SIGN_UP ? SIGN_IN : TODO)
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          window.alert(PASSWORD_ERROR)
-        } else {
-          window.alert(error?.response?.data.message)
-        }
-      } else {
-        window.alert(UNKNOWN_ERROR)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message)
       }
+      alert(UNKNOWN_ERROR)
     }
   }
 

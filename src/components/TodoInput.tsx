@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { TodoButton, Input, TodoInputMain, Message } from '../styles/TodoStyle'
 import { onAddFunction } from '../pages/Todo'
-import { alertError } from '../utils/error'
 import { CHECK_TODO_INPUT } from '../utils/message'
-import { AxiosError } from 'axios'
 
 interface OnAddProps {
   onAdd: onAddFunction
@@ -13,15 +11,9 @@ export default function TodoInput({ onAdd }: OnAddProps) {
   const [value, setValue] = useState('')
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault()
-      onAdd(value)
-      setValue('')
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alertError(error)
-      }
-    }
+    e.preventDefault()
+    onAdd(value)
+    setValue('')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
