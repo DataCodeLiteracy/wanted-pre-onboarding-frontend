@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { TodoButton, Input, TodoInputMain, Message } from '../styles/TodoStyle'
 import { onAddFunction } from '../pages/Todo'
-import { alertError } from '../utils/error'
 import { CHECK_TODO_INPUT } from '../utils/message'
 
 interface OnAddProps {
@@ -12,21 +11,13 @@ export default function TodoInput({ onAdd }: OnAddProps) {
   const [value, setValue] = useState('')
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    try {
-      e.preventDefault()
-      onAdd(value)
-      setValue('')
-    } catch (error) {
-      alertError(error.message)
-    }
+    e.preventDefault()
+    onAdd(value)
+    setValue('')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      setValue(e.target.value)
-    } catch (error) {
-      alertError(error.message)
-    }
+    setValue(e.target.value)
   }
 
   return (

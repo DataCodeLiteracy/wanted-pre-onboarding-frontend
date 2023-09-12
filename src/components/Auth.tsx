@@ -9,8 +9,8 @@ import {
 } from '../utils/message'
 import localToken from '../api/LocalToken'
 import { signInUser, signUpUser } from '../api/AuthApi'
-import { alertError } from '../utils/error'
 import { isValidEmail, isValidPassword } from '../utils/validation'
+import { AxiosError } from 'axios'
 
 interface AuthProps {
   title: string
@@ -45,11 +45,16 @@ const Auth = ({ title, buttonText }: AuthProps) => {
     try {
       if (path === SIGN_UP) {
         await signUpUser({ email, password })
+
         window.alert(COMPLETED_SIGN_UP)
       }
 
       if (path === SIGN_IN) {
         const res = await signInUser({ email, password })
+
+        if (!res) {
+          return
+        }
 
         const { access_token } = res
 
@@ -66,7 +71,9 @@ const Auth = ({ title, buttonText }: AuthProps) => {
 
       navigate(path === SIGN_UP ? SIGN_IN : TODO)
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alert(error.message)
+      }
     }
   }
 

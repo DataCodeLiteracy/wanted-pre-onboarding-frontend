@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import TodoInput from '../components/TodoInput'
 import TodoList from '../components/TodoList'
-import AppHeader from '../components/AppHeader'
 import { createTodo, deleteTodo, getTodos, updateTodo } from '../api/TodoApi'
 import { TodoWrapper, TodoMain, TodoTitle, Ul } from '../styles/TodoStyle'
-import { alertError } from '../utils/error'
+import { AxiosError } from 'axios'
 
 export type onAddFunction = (todo: string) => void
 export type OnTodoFunction = (todoItem: ITodo) => void
@@ -23,7 +22,10 @@ export default function Todo() {
       const res = await getTodos()
       return res
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
+      return []
     }
   }
 
@@ -39,40 +41,47 @@ export default function Todo() {
       const createdTodo = await createTodo(todo)
       setTodos([...todos, createdTodo])
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
     }
   }
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     try {
-      deleteTodo(id)
+      await deleteTodo(id)
       setTodos(todos.filter((item) => item.id !== id))
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
     }
   }
 
-  const handleCheck = (todoItem: ITodo) => {
+  const handleCheck = async (todoItem: ITodo) => {
     try {
-      updateTodo(todoItem)
+      await updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
     }
   }
 
-  const handleEdit = (todoItem: ITodo) => {
+  const handleEdit = async (todoItem: ITodo) => {
     try {
-      updateTodo(todoItem)
+      await updateTodo(todoItem)
       setTodos(todos.map((item) => (item.id === todoItem.id ? todoItem : item)))
     } catch (error) {
-      alertError(error)
+      if (error instanceof AxiosError) {
+        alert(error)
+      }
     }
   }
 
   return (
     <TodoWrapper>
-      <AppHeader />
       <TodoMain>
         <TodoTitle>TODO LIST</TodoTitle>
         <TodoInput onAdd={handleAdd} />

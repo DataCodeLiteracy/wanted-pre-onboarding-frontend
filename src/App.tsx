@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom'
-import { AppContextProvider } from './context/AppContext'
+import AppHeader from './components/AppHeader'
+import { Wrapper } from './styles/HomeStyle'
 
 function App() {
   return (
-    <AppContextProvider>
+    <Wrapper>
+      <AppHeader />
       <Outlet />
-    </AppContextProvider>
+    </Wrapper>
   )
 }
 
